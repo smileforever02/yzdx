@@ -17,7 +17,8 @@ const globalData = {
 
 const store = new Vuex.Store({
     state: {
-        count: 0
+        count: 0,
+        chartDataQuery: {}
     },
     getters: {
       countMul100(state){
@@ -27,6 +28,9 @@ const store = new Vuex.Store({
     mutations: {
         increment(state){
             state.count++
+        },
+        updateChartQuery(state, query){
+          state.chartDataQuery = query;
         }
     },
     actions: {

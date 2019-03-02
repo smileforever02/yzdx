@@ -13,7 +13,7 @@ const routes = [
     { path: '/', component: Home },
     { path: '/upload', component: Upload },
     { path: '/search', component: Search },
-    { path: '/chart/:query', component: Chart }
+    { path: '/chart', component: Chart }
 ];
 export default new VueRouter({
     // mode: 'history',

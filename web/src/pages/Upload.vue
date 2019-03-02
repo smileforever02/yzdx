@@ -2,16 +2,11 @@
     <div class="full-width center-content">
         <form class="" style="width: 90%;" v-on:submit.prevent="submit">
             <div class="form-group">
-                <input ref="file" class="form-control" type="file" required accept="application/excel, application/vnd.ms-excel, application/x-excel, application/x-msexcel" placeholder="上传文件">
+                <input ref="file" class="form-control" type="file" required accept="application/excel, application/vnd.ms-excel, application/x-excel, application/x-msexcel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" placeholder="上传文件">
             </div>
             <button type="submit" class="btn btn-primary">上传</button>
             <button type="reset" class="btn">重置</button>
         </form>
-        <ul class="item-list no-padding">
-            <li v-for="item in items" v-bind:key="item.userId" v-bind:data-userid="item.userId">
-                <input type="checkbox"><span v-on:click="checkUser(item.userId, item.nickName)">{{item.nickName}}</span><span v-on:click="addFriend(item.userId, item.nickName)" class="glyphicon glyphicon-plus-sign right" aria-hidden="true"></span>
-            </li>
-        </ul>
     </div>
 </template>
 
