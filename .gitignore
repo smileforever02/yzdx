@@ -28,3 +28,7 @@ HELP.md
 
 .DS_Store
 uploads/
+
+### node ###
+node_modules/
+dist/
