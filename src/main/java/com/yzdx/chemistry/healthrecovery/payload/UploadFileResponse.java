@@ -7,11 +7,18 @@ public class UploadFileResponse {
     private String fileType;
     private long size;
 
+    private String errMsg;
+
     public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
+    }
+
+    public UploadFileResponse(String fileName, String errMsg) {
+        this.fileName = fileName;
+        this.errMsg = errMsg;
     }
 
     public String getFileName() {
@@ -44,5 +51,13 @@ public class UploadFileResponse {
 
     public void setSize(long size) {
         this.size = size;
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

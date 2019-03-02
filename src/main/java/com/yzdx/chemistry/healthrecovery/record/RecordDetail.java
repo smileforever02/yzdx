@@ -5,10 +5,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "record_detail")
 public class RecordDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "detailId", insertable = false, nullable = false, updatable = false)
+    @Column(name = "detail_id", insertable = false, nullable = false, updatable = false)
     private Long detailId;
 
     private Long recordId;

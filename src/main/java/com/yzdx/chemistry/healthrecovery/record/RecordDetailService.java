@@ -14,4 +14,5 @@ public class RecordDetailService {
     public List<RecordDetail> createRecordDetails(List<RecordDetail> details) {
         return repository.saveAll(details);
     }
+
 }
