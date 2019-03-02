@@ -2,13 +2,15 @@ package com.yzdx.chemistry.healthrecovery.record;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 
 @Entity
+@Table(name = "record")
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "recordId", insertable = false, nullable = false, updatable = false)
+    @Column(name = "record_id", insertable = false, nullable = false, updatable = false)
     private Long recordId;
 
     private String userId;
@@ -17,15 +19,20 @@ public class Record {
 
     private double age;
 
+    private String gender;
+
     private String bodyPart;
 
     private double frequency;
 
     private String fileName;
 
-    private String filePath;
+    private String fileDownloadUri;
 
     private long size;
+
+    @OneToMany(mappedBy = "recordId", fetch = FetchType.LAZY)
+    private Set<RecordDetail> recordDetails;
 
     private Date createdDate;
 
@@ -61,6 +68,14 @@ public class Record {
         this.age = age;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getBodyPart() {
         return bodyPart;
     }
@@ -85,12 +100,12 @@ public class Record {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getFileDownloadUri() {
+        return fileDownloadUri;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileDownloadUri(String fileDownloadUri) {
+        this.fileDownloadUri = fileDownloadUri;
     }
 
     public long getSize() {
@@ -99,6 +114,14 @@ public class Record {
 
     public void setSize(long size) {
         this.size = size;
+    }
+
+    public Set<RecordDetail> getRecordDetails() {
+        return recordDetails;
+    }
+
+    public void setRecordDetails(Set<RecordDetail> recordDetails) {
+        this.recordDetails = recordDetails;
     }
 
     public Date getCreatedDate() {
