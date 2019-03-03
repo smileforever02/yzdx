@@ -30,11 +30,19 @@ public class FileController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping("/uploadFile")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, String fileDownloadUri) {
+/*    @PostMapping("/uploadFile")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+    }*/
 
-
+    private UploadFileResponse uploadFile(MultipartFile file, String fileDownloadUri) {
+        String fileName = fileStorageService.storeFile(file);
         return new UploadFileResponse(fileName, fileDownloadUri,
                 file.getContentType(), file.getSize());
     }

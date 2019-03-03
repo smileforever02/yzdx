@@ -8,6 +8,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -24,6 +25,8 @@ public class HealthApp implements ApplicationRunner {
 
         Optional<Record> record = recordService.findById(163L);
         System.out.println(record.get().getRecordDetails().size());
+//        List<Object> chartDataList = recordService.genAvgRecordDetailByUser("zhangsan", "right middle finger", "2018-01-01", "2019-09-08");
+//        System.out.println(chartDataList.size());
         //  excelUtil.parseExcel(filePath);
     }
 }

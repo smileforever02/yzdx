@@ -31,7 +31,7 @@ public class Record {
 
     private long size;
 
-    @OneToMany(mappedBy = "recordId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "recordId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<RecordDetail> recordDetails;
 
     private Date createdDate;

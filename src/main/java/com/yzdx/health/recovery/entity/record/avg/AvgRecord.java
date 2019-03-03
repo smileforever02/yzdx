@@ -26,8 +26,12 @@ public class AvgRecord {
 
     private Date toDate;
 
-    @OneToMany(mappedBy = "avgRecordId", fetch = FetchType.EAGER)
+    private long recordCount;
+
+    @OneToMany(mappedBy = "avgRecordId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<AvgRecordDetail> avgRecordDetails;
+
+    private String description;
 
     private Date createdDate;
 
@@ -95,12 +99,28 @@ public class AvgRecord {
         this.toDate = toDate;
     }
 
+    public long getRecordCount() {
+        return recordCount;
+    }
+
+    public void setRecordCount(long recordCount) {
+        this.recordCount = recordCount;
+    }
+
     public Set<AvgRecordDetail> getAvgRecordDetails() {
         return avgRecordDetails;
     }
 
     public void setAvgRecordDetails(Set<AvgRecordDetail> avgRecordDetails) {
         this.avgRecordDetails = avgRecordDetails;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreatedDate() {
