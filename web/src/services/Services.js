@@ -5,14 +5,19 @@ export default {
     search(query){
         return this.get('/search?' + this._toQueryString(query))
     },
-    uploadDataFile(file){
+    uploadDataFile(files){
         let deffer = $.Deferred()
+        files = files || [];
+        if(files.length === 0){
+            deffer.reject('no files');
+            return deffer;
+        }
         let formData = new FormData();
-        formData.append("file", file);
+        Array.prototype.slice.call(files).forEach(f => formData.append("files", f));
         mask.show();
         $.ajax({
             type: 'POST',
-            url: '/uploadFile',
+            url: '/uploadMultipleFiles',
             data: formData,
             processData: false,
             contentType: false

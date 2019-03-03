@@ -1,93 +1,62 @@
 [{
-	"useruserId": "1001",
-	"nickName": "U-Tom"
+	"recordId": "10011",
+	"userId": "U-Tom",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1002",
-	"nickName": "U-Kobe"
+	"recordId": "10021",
+	"userId": "U-Kobe",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1003",
-	"nickName": "U-Kerry"
+	"recordId": "10031",
+	"userId": "U-Kerry",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1004",
-	"nickName": "U-Jams"
+	"recordId": "10041",
+	"userId": "U-Jams",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1005",
-	"nickName": "U-Larry"
+	"recordId": "10051",
+	"userId": "U-Larry",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },
  {
-	"useruserId": "1001",
-	"nickName": "U-Tom"
+	"recordId": "1001",
+	"userId": "U-Tom",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1002",
-	"nickName": "U-Kobe"
+	"recordId": "1002",
+	"userId": "U-Kobe",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1003",
-	"nickName": "U-Kerry"
+	"recordId": "1003",
+	"userId": "U-Kerry",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1004",
-	"nickName": "U-Jams"
+	"recordId": "1004",
+	"userId": "U-Jams",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
  },{
-	"userId": "1005",
-	"nickName": "U-Larry"
- },
- {
-	"useruserId": "1001",
-	"nickName": "U-Tom"
- },{
-	"userId": "1002",
-	"nickName": "U-Kobe"
- },{
-	"userId": "1003",
-	"nickName": "U-Kerry"
- },{
-	"userId": "1004",
-	"nickName": "U-Jams"
- },{
-	"userId": "1005",
-	"nickName": "U-Larry"
- },{
-	"userId": "1002",
-	"nickName": "U-Kobe"
- },{
-	"userId": "1003",
-	"nickName": "U-Kerry"
- },{
-	"userId": "1004",
-	"nickName": "U-Jams"
- },{
-	"userId": "1005",
-	"nickName": "U-Larry"
- },
- {
-	"useruserId": "1001",
-	"nickName": "U-Tom"
- },{
-	"userId": "1002",
-	"nickName": "U-Kobe"
- },{
-	"userId": "1003",
-	"nickName": "U-Kerry"
- },{
-	"userId": "1004",
-	"nickName": "U-Jams"
- },{
-	"userId": "1005",
-	"nickName": "U-Larry"
- },
- {
-	"useruserId": "1001",
-	"nickName": "U-Tom"
- },{
-	"userId": "1002",
-	"nickName": "U-Kobe"
- },{
-	"userId": "1003",
-	"nickName": "U-Kerry"
- },{
-	"userId": "1004",
-	"nickName": "U-Jams"
- },{
-	"userId": "1005",
-	"nickName": "U-Larry"
- }
-]
+	"recordId": "1005",
+	"userId": "U-Larry",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ }]

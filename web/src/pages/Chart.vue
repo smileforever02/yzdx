@@ -1,6 +1,6 @@
 <template>
     <div class="full-width center-content">
-        <form class="full-width form-inline" style="position: absolute;top: 39px;left: 0px;padding: 0 1em 0;background-color: white;height: 45px;line-height: 45px;z-index: 10;" v-on:submit.prevent="setMax">
+        <form class="full-width form-inline" style="position: absolute;top: 28px;left: 0px;padding: 0 1em 0;background-color: white;height: 45px;line-height: 45px;z-index: 10;" v-on:submit.prevent="setMax">
             <div class="form-group">
                 <label for="startIdx">开始点</label>
                 <input class="form-control" id="startIdx" min="0" type="number" v-model.lazy.trim="startIdx">

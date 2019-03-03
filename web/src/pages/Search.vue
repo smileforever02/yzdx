@@ -1,6 +1,6 @@
 <template>
     <div class="full-width center-content">
-        <form class="full-width form-inline" style="position: absolute;top: 39px;left: 0px;padding: 0 1em 0;background-color: white;height: 45px;line-height: 45px;z-index: 10;" v-on:submit.prevent="submit">
+        <form class="full-width form-inline" style="position: absolute;top: 28px;left: 0px;padding: 0 1em 0;background-color: white;height: 45px;line-height: 45px;z-index: 10;" v-on:submit.prevent="submit">
             <div class="form-group">
                 <label for="userName">姓名</label>
                 <input class="form-control" id="userName" placeholder="姓名" v-model.lazy.trim="userName">
@@ -19,18 +19,32 @@
                     <option value="F">女性</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="bodyPart">部位</label>
+                <select class="form-control" id="bodyPart" v-model.lazy.trim="bodyPart">
+                    <option value="ALL" selected>全部</option>
+                    <option value="LL">左胳膊</option>
+                    <option value="RL">右胳膊</option>
+                    <option value="LH">左手指</option>
+                    <option value="RH">右手指</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="age">时间</label>
+                <input class="form-control" id="fromDate" placeholder="2019-01-01 12:00:00" v-model.lazy.trim="fromDate">
+                <label>--</label>
+                <input class="form-control" id="toDate" placeholder="2019-01-01 12:00:00" v-model.lazy.trim="toDate">
+            </div>
             <button type="submit" class="btn btn-primary">搜索</button>
             <button type="reset" class="btn">重置</button>
-            <button class="btn" type="button" @click="checkAvg">查看平均</button>
+            <button class="btn" type="button" @click="calculateAvg">统计平均</button>
+            <button class="btn" type="button" @click="checkAvg">平均图</button>
         </form>
-        <ul class="page-content item-list" style="padding: 5em 1em 0em 1em;">
-            <li v-for="item in items" v-bind:key="item.userId" v-bind:data-userid="item.userId">
-                <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item)">{{item.nickName}}</span>
+        <ul class="page-content item-list" style="padding: 6em 1em 0em 1em;">
+            <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId">
+                <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
             </li>
         </ul>
-        <div v-if="this.items != null && this.items.filter(u => u.checked).length > 0" style="position: fixed; left: 0px; top: 100px;">
-            <button>看平均</button>
-        </div>
     </div>
 </template>
 
@@ -45,6 +59,9 @@ export default {
             fromAge: null,
             toAge: null,
             gender: 'ALL',
+            bodyPart: 'ALL',
+            fromDate: null,
+            toDate: null,
             items: []
         }
     },
@@ -57,7 +74,7 @@ export default {
     methods: {
         submit(){
             console.log(this.items);
-            Services.search({userName: this.userName, fromAge: this.fromAge, toAge: this.toAge, gender: this.gender})
+            Services.search({name: this.userName, fromAge: this.fromAge, toAge: this.toAge, gender: this.gender, bodyPart: this.bodyPart})
                 .done((data) => {
                     console.log(data)
                     this.items = data;
@@ -70,6 +87,9 @@ export default {
             console.log(user);
             this.$store.commit('updateChartQuery', user);
             this.$router.push('/chart');
+        },
+        calculateAvg(){
+            
         },
         checkAvg(){
             let selects = (this.items || []).filter(u => u.checked);
