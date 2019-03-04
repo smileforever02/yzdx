@@ -13,7 +13,7 @@ public class AvgRecordService {
     @Autowired
     AvgRecordRepository repository;
 
-    public AvgRecord generateAvgRecord(AvgRecord avgRecord) {
+    public AvgRecord saveAvgRecord(AvgRecord avgRecord) {
         return repository.save(avgRecord);
     }
 

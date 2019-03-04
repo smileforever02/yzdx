@@ -6,9 +6,8 @@ import java.util.Set;
 
 @Entity
 public class AvgRecord {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "avg_record_id", insertable = false, nullable = false, updatable = false)
     private Long avgRecordId;
 
@@ -28,9 +27,10 @@ public class AvgRecord {
 
     private long recordCount;
 
-    @OneToMany(mappedBy = "avgRecordId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "avgRecord", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<AvgRecordDetail> avgRecordDetails;
 
+    private String name;
     private String description;
 
     private Date createdDate;
@@ -113,6 +113,14 @@ public class AvgRecord {
 
     public void setAvgRecordDetails(Set<AvgRecordDetail> avgRecordDetails) {
         this.avgRecordDetails = avgRecordDetails;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

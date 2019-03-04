@@ -79,86 +79,111 @@ public class ExcelService {
     }
 
     private String parseExcel(Workbook workbook, String fileName, long size, String fileDownloadUri) {
-        String errMsg = null;
+        try {
+            String errMsg = null;
 
-        Sheet sheet = workbook.getSheetAt(0);
-        int i = 0;
-        Record record = new Record();
-        User userToSave = new User();
-        int lastRowNum = sheet.getLastRowNum();
-        for (i = 0; i <= lastRowNum; i++) {
-            Row row = sheet.getRow(i);
-            if (row != null) {
-                Cell cell = row.getCell(0);
-                Cell secondCell = row.getCell(1);
-                if (cell != null && secondCell != null) {
-                    String cellValue = cell.getStringCellValue();
-                    if ("测试日期".equalsIgnoreCase(cellValue)) {
-                        record.setTestDate(secondCell.getDateCellValue());
-                    } else if ("用户id".equalsIgnoreCase(cellValue)) {
-                        userToSave.setUserId(secondCell.getStringCellValue().trim());
-                        record.setUserId(secondCell.getStringCellValue().trim());
-                    } else if ("姓名".equalsIgnoreCase(cellValue)) {
-                        userToSave.setName(secondCell.getStringCellValue());
-                    } else if ("测试人体部位".equalsIgnoreCase(cellValue)) {
-                        record.setBodyPart(secondCell.getStringCellValue().trim());
-                    } else if ("运动频率".equalsIgnoreCase(cellValue)) {
-                        record.setFrequency(secondCell.getNumericCellValue());
-                    } else if ("年龄".equalsIgnoreCase(cellValue)) {
-                        record.setAge(secondCell.getNumericCellValue());
-                    } else if ("性别".equalsIgnoreCase(cellValue)) {
-                        userToSave.setGender(secondCell.getStringCellValue());
-                        record.setGender(secondCell.getStringCellValue());
-                    } else if ("出生日期".equalsIgnoreCase(cellValue) || "生日".equalsIgnoreCase(cellValue)) {
-                        userToSave.setBirthday(secondCell.getDateCellValue());
-                    } else if (cellValue.contains("时间")) {
-                        i++;
-                        break;
+            Sheet sheet = workbook.getSheetAt(0);
+            int i = 0;
+            Record record = new Record();
+            User userToSave = new User();
+            int lastRowNum = sheet.getLastRowNum();
+            for (i = 0; i <= lastRowNum; i++) {
+                Row row = sheet.getRow(i);
+                if (row != null) {
+                    Cell cell = row.getCell(0);
+                    Cell secondCell = row.getCell(1);
+                    if (cell != null && secondCell != null) {
+                        String cellValue = cell.getStringCellValue();
+                        if ("测试时间".equalsIgnoreCase(cellValue)) {
+                            record.setTestDate(secondCell.getDateCellValue());
+                        } else if ("用户id".equalsIgnoreCase(cellValue)) {
+                            userToSave.setUserId(secondCell.getStringCellValue().trim());
+                            record.setUserId(secondCell.getStringCellValue().trim());
+                        } else if ("姓名".equalsIgnoreCase(cellValue)) {
+                            userToSave.setName(secondCell.getStringCellValue());
+                        } else if ("测试人体部位".equalsIgnoreCase(cellValue)) {
+                            record.setBodyPart(secondCell.getStringCellValue().trim());
+                        } else if ("运动频率".equalsIgnoreCase(cellValue)) {
+                            record.setFrequency(secondCell.getNumericCellValue());
+                        } else if ("年龄".equalsIgnoreCase(cellValue)) {
+                            record.setAge(secondCell.getNumericCellValue());
+                        } else if ("性别".equalsIgnoreCase(cellValue)) {
+                            String gender = secondCell.getStringCellValue();
+                            if ("M".equalsIgnoreCase(gender)
+                                    || "men".equalsIgnoreCase(gender)
+                                    || "男".equalsIgnoreCase(gender)) {
+                                gender = "M";
+                            } else {
+                                gender = "F";
+                            }
+                            userToSave.setGender(gender);
+                            record.setGender(gender);
+                        } else if ("出生日期".equalsIgnoreCase(cellValue) || "生日".equalsIgnoreCase(cellValue)) {
+                            userToSave.setBirthday(secondCell.getDateCellValue());
+                        } else if (cellValue.startsWith("时间")) {
+                            i++;
+                            break;
+                        }
                     }
                 }
             }
-        }
 
-        Optional<User> userOptional = userService.getUser(userToSave.getUserId());
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            if (!user.getName().equals(userToSave.getName())) {
-                errMsg = fileName + "中，userId '" + userToSave.getUserId() + "'的姓名'" + userToSave.getName() + "'与数据库中的姓名'" + user.getName() + "'不匹配, 请修改后再上传";
-                return errMsg;
-            }
-        } else {
-            userService.registerUser(userToSave);
-        }
-
-        record.setFileName(fileName);
-        record.setSize(size);
-        record.setFileDownloadUri(fileDownloadUri);
-        record.setCreatedDate(new Date());
-
-        Set<RecordDetail> details = new HashSet<>();
-        for (; i <= lastRowNum; i++) {
-            Row row = sheet.getRow(i);
-            if (row != null) {
-                RecordDetail detail = new RecordDetail();
-                detail.setTime(row.getCell(0).getNumericCellValue());
-                detail.setCap(row.getCell(1).getNumericCellValue());
-                detail.setInitCap(row.getCell(2).getNumericCellValue());
-                detail.setDeltaCapPerc(row.getCell(3).getNumericCellValue());
-                detail.setPower(row.getCell(4).getNumericCellValue());
-                detail.setCreatedDate(new Date());
-
-                details.add(detail);
+            Optional<User> userOptional = userService.getUser(userToSave.getUserId());
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                if (!user.getName().equals(userToSave.getName())) {
+                    errMsg = fileName + "中，userId '" + userToSave.getUserId() + "'的姓名'" + userToSave.getName() + "'与数据库中的姓名'" + user.getName() + "'不匹配, 请修改后再上传";
+                    return errMsg;
+                }
             } else {
-                break;
+                userService.registerUser(userToSave);
             }
+
+            record.setFileName(fileName);
+            record.setSize(size);
+            record.setFileDownloadUri(fileDownloadUri);
+            record.setCreatedDate(new Date());
+
+            Set<RecordDetail> details = new HashSet<>();
+            for (; i <= lastRowNum; i++) {
+                Row row = sheet.getRow(i);
+                if (row != null && row.getCell(0) != null
+                && row.getCell(1) != null && row.getCell(2) != null
+                && row.getCell(3) != null && row.getCell(4) != null) {
+                    RecordDetail detail = new RecordDetail();
+                    detail.setTime(row.getCell(0).getNumericCellValue());
+                    detail.setCap(row.getCell(1).getNumericCellValue());
+                    detail.setInitCap(row.getCell(2).getNumericCellValue());
+                    detail.setDeltaCapPerc(row.getCell(3).getNumericCellValue());
+                    detail.setPower(row.getCell(4).getNumericCellValue());
+                    detail.setCreatedDate(new Date());
+
+                    detail.setRecord(record);
+                    details.add(detail);
+                } else {
+                    break;
+                }
+            }
+
+            record.setRecordDetails(details);
+
+            Optional<Record> optionalRecord = recordService.findByFileName(fileName);
+            if (optionalRecord.isPresent()) {
+                Record existingRecord = optionalRecord.get();
+                record.setRecordId(existingRecord.getRecordId());
+
+                recordService.deleteRecord(existingRecord);
+
+                recordService.updateRecord(record);
+                System.out.println("update record in file " + fileName);
+            } else {
+                recordService.createRecord(record);
+                System.out.println("create record in file " + fileName);
+            }
+            return null;
+        } catch (Exception e) {
+            return e.getMessage();
         }
 
-        record.setRecordDetails(details);
-
-        record = recordService.createRecord(record);
-        Long recordId = record.getRecordId();
-        System.out.println("record saved with recordId:" + recordId);
-
-        return errMsg;
     }
 }

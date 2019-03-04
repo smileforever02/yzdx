@@ -1,18 +1,23 @@
 package com.yzdx.health.recovery.entity.record;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
+@JsonIgnoreProperties(value={"record"})
 @Entity
 @Table(name = "record_detail")
 public class RecordDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "detail_id", insertable = false, nullable = false, updatable = false)
     private Long detailId;
 
-    private Long recordId;
+    @ManyToOne
+    @JoinColumn(name = "record_id",referencedColumnName = "record_id", nullable = false)
+    private Record record;
 
     private double time;
 
@@ -34,12 +39,12 @@ public class RecordDetail {
         this.detailId = detailId;
     }
 
-    public Long getRecordId() {
-        return recordId;
+    public Record getRecord() {
+        return record;
     }
 
-    public void setRecordId(Long recordId) {
-        this.recordId = recordId;
+    public void setRecord(Record record) {
+        this.record = record;
     }
 
     public double getTime() {

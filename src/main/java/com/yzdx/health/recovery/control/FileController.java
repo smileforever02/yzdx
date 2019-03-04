@@ -67,6 +67,7 @@ public class FileController {
                     responses.add(new UploadFileResponse(fileName, errMsg));
                 }
             } catch (Exception e) {
+                responses.add(new UploadFileResponse(fileName, e.getMessage()));
                 e.printStackTrace();
             }
             System.out.println(String.format("file %s is saved", fileName));

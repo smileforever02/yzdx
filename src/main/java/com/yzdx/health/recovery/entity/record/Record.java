@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "record")
 public class Record {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "record_id", insertable = false, nullable = false, updatable = false)
     private Long recordId;
 
@@ -31,7 +31,7 @@ public class Record {
 
     private long size;
 
-    @OneToMany(mappedBy = "recordId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "record", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RecordDetail> recordDetails;
 
     private Date createdDate;

@@ -9,7 +9,6 @@ import java.util.Date;
 @Entity
 @Table(name = "user")
 public class User {
-
     @Id
     private String userId;
     private String password;
@@ -19,7 +18,6 @@ public class User {
     private String phoneNumber;
     private String email;
     private Date createdDate;
-
 
     public String getUserId() {
         return userId;

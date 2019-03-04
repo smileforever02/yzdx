@@ -1,17 +1,21 @@
 package com.yzdx.health.recovery.entity.record.avg;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
+@JsonIgnoreProperties(value={"avgRecord"})
 @Entity
 public class AvgRecordDetail {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "avg_detail_id", insertable = false, nullable = false, updatable = false)
     private Long avgDetailId;
 
-    private Long avgRecordId;
+    @ManyToOne
+    @JoinColumn(name = "avg_record_id", referencedColumnName = "avg_record_id", nullable = false)
+    private AvgRecord avgRecord;
 
     private double time;
 
@@ -31,12 +35,12 @@ public class AvgRecordDetail {
         this.avgDetailId = avgDetailId;
     }
 
-    public Long getAvgRecordId() {
-        return avgRecordId;
+    public AvgRecord getAvgRecord() {
+        return avgRecord;
     }
 
-    public void setAvgRecordId(Long avgRecordId) {
-        this.avgRecordId = avgRecordId;
+    public void setAvgRecord(AvgRecord avgRecord) {
+        this.avgRecord = avgRecord;
     }
 
     public double getTime() {
