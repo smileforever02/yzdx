@@ -13,7 +13,7 @@ public class AvgRecordDetailService {
     @Autowired
     AvgRecordDetailRepository repository;
 
-    public List<AvgRecordDetail> getAllByAvgRecordAvgRecordId(String avgRecordId) {
+    public List<AvgRecordDetail> getAllByAvgRecordAvgRecordId(Long avgRecordId) {
         return repository.getAllByAvgRecordAvgRecordId(avgRecordId);
     }
 }

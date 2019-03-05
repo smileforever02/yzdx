@@ -17,7 +17,7 @@ public class RecordDetailService {
         return repository.saveAll(details);
     }
 
-    public List<RecordDetail> getRecordDetail(String recordId) {
+    public List<RecordDetail> getRecordDetail(Long recordId) {
         return repository.getAllByRecordRecordId(recordId);
     }
 

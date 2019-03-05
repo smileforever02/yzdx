@@ -5,9 +5,16 @@ import com.yzdx.health.recovery.entity.record.RecordDetailRepository;
 import com.yzdx.health.recovery.entity.record.RecordRepository;
 import com.yzdx.health.recovery.entity.record.avg.AvgRecord;
 import com.yzdx.health.recovery.entity.record.avg.AvgRecordDetail;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +31,9 @@ public class RecordService {
 
     @Autowired
     AvgRecordService avgRecordService;
+
+    @Autowired
+    EntityManager entityManager;
 
     public Record createRecord(Record record) {
         return repository.save(record);
@@ -43,22 +53,6 @@ public class RecordService {
 
     public List<Record> findAllByUserId(String userId) {
         return repository.findAllByUserId(userId);
-    }
-
-    public List<Record> findAllByUserIdAndBodyPart(String userId, String bodyPart) {
-        return repository.findAllByUserIdAndBodyPart(userId, bodyPart);
-    }
-
-    public List<Record> findAllByUserIdAndBodyPartAndTestDateBetween(String userId, String bodyPart, Date fromDate, Date toDate) {
-        return repository.findAllByUserIdAndBodyPartAndTestDateBetween(userId, bodyPart, fromDate, toDate);
-    }
-
-    public List<Record> findAllByBodyPartAndGenderAndAgeBetween(String bodyPart, String gender, double fromAge, double toAge) {
-        return repository.findAllByBodyPartAndGenderAndAgeBetween(bodyPart, gender, fromAge, toAge);
-    }
-
-    public List<Record> findAllByBodyPartAndGenderAndAgeBetweenAndTestDateBetween(String bodyPart, String gender, double fromAge, double toAge, Date fromDate, Date toDate) {
-        return repository.findAllByBodyPartAndGenderAndAgeBetweenAndTestDateBetween(bodyPart, gender, fromAge, toAge, fromDate, toDate);
     }
 
     // fromDate and toDate format should be YYYY-MM-DD
@@ -135,5 +129,46 @@ public class RecordService {
 
     public Optional<Record> findByFileName(String fileName) {
         return repository.findAllByFileName(fileName);
+    }
+
+    public List<Record> findAll(String userId, String bodyPart, String gender, String fromAge, String toAge, String fromDate, String toDate) {
+        return repository.findAll(new Specification<Record>() {
+            @Override
+            public Predicate toPredicate(Root<Record> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new LinkedList<>();
+
+                if (!StringUtils.isEmpty(userId)) {
+                    predicates.add(criteriaBuilder.equal(root.get("userId"), userId));
+                }
+                if (!StringUtils.isEmpty(bodyPart)) {
+                    predicates.add(criteriaBuilder.like(root.get("bodyPart"), "%" + bodyPart + "%"));
+                }
+                if (!StringUtils.isEmpty(gender)) {
+                    predicates.add(criteriaBuilder.equal(root.get("gender"), gender));
+                }
+                if (!StringUtils.isEmpty(fromAge)) {
+                    predicates.add(criteriaBuilder.ge(root.get("age"), Double.parseDouble(fromAge)));
+                }
+                if (!StringUtils.isEmpty(toAge)) {
+                    predicates.add(criteriaBuilder.le(root.get("age"), Double.parseDouble(toAge)));
+                }
+                if (!StringUtils.isEmpty(fromDate)) {
+                    try {
+                        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("testDate"), new SimpleDateFormat("YYYY-MM-DD").parse(fromDate)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (!StringUtils.isEmpty(toDate)) {
+                    try {
+                        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("testDate"), new SimpleDateFormat("YYYY-MM-DD").parse(toDate)));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
     }
 }
