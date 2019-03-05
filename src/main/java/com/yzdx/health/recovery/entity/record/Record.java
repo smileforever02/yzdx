@@ -1,10 +1,13 @@
 package com.yzdx.health.recovery.entity.record;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
 
+@JsonIgnoreProperties(value={"recordDetails"})
 @Entity
 @Table(name = "record")
 public class Record {

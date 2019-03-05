@@ -5,6 +5,7 @@ import com.yzdx.health.recovery.entity.record.avg.AvgRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,4 +26,6 @@ public class AvgRecordService {
             return null;
         }
     }
+
+
 }

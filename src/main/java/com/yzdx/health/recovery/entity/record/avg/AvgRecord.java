@@ -1,9 +1,12 @@
 package com.yzdx.health.recovery.entity.record.avg;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
+@JsonIgnoreProperties(value={"avgRecordDetails"})
 @Entity
 public class AvgRecord {
     @Id

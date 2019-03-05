@@ -17,4 +17,8 @@ public class RecordDetailService {
         return repository.saveAll(details);
     }
 
+    public List<RecordDetail> getRecordDetails(String recordId) {
+        return repository.getAllByRecordRecordId(recordId);
+    }
+
 }
