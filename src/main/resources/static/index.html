@@ -8,14 +8,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0, shrink-to-fit=no">
   <title>Welcome</title>
   <!-- <link rel="stylesheet" href="static/3rd-js/jquery-ui-1.12.1.custom/jquery-ui.min.css"> -->
-  <link rel="stylesheet" href="static/3rd-css/bootstrap.3.3.7.css">
+  <link rel="stylesheet" href="static/3rd-css/bootstrap.3.3.5.min.css">
+  <link rel="stylesheet" href="static/3rd-css/bootstrap-dialog.min.css">
+  <link rel="stylesheet" href="static/3rd-css/jquery-ui.1.12.1.min.css">
+
   <script src="static/3rd-js/jquery-3.3.1.min.js"></script>
+  <script src="static/3rd-js/jquery-ui.1.12.1.min.js"></script>
+  <script src="static/3rd-js/jquery.ui.touch-punch.0.2.3.min.js"></script>
   <script src="static/3rd-js/popper.1.14.3.min.js"></script>
-  <script src="static/3rd-js/bootstrap.4.1.3.min.js"></script>
+  <script src="static/3rd-js/bootstrap.3.3.5.min.js"></script>
   <script src="static/3rd-js/validator.min.js"></script>
+  <script src="static/3rd-js/bootstrap-dialog.min.js"></script>
   <script src="static/3rd-js/Chart.2.7.3.bundle.min.js"></script>
-  <!-- <script src="static/3rd-js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script> -->
-  <!-- <script src="static/3rd-js/draggable.1.0.0-beta.6.js"></script> -->
+  <script src="static/3rd-js/chart-utils.js"></script>
 </head>
 
 <body>
@@ -48,7 +53,7 @@
       <router-view></router-view>
     </transition>
   </div>
-  <div class="message-box">
+  <div class="message-box" style="z-index: 9999;">
     <div class="alert alert-danger">
       <span>your message will be here</span>
     </div>

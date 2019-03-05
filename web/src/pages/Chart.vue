@@ -28,7 +28,7 @@
 <script>
 import $ from "../utils"
 import Services from '../services/Services'
-import MessageBox from '../../../../displayer/src/services/MessageBox';
+import MessageBox from '../services/MessageBox';
 
 const MAX_DISPLAYED = 300;
 const STEP = 10;
@@ -36,6 +36,11 @@ const LEFT = -1;
 const RIGHT = 1;
 
 export default {
+    props: {
+        chartQuery: {
+            type: Object
+        }
+    },
     data(){
         return {
             startIdx: 0,
@@ -48,6 +53,7 @@ export default {
     },
     mounted(){
         console.log('mount chart');
+        console.log(`chart query: ${JSON.stringify(this.chartQuery)}`);
         this.drawChart();
     },
     methods: {

@@ -3,7 +3,10 @@ import $ from '../utils'
 const mask = $('#mask');
 export default {
     search(query){
-        return this.get('/search?' + this._toQueryString(query))
+        return this.get('/getRecordsByUser?' + this._toQueryString(query))
+    },
+    genAvgRecordDetail(data){
+        return this.post('/genAvgRecordDetail', data);
     },
     uploadDataFile(files){
         let deffer = $.Deferred()

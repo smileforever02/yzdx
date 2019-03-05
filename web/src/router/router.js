@@ -8,7 +8,9 @@ import Search from '../pages/Search.vue'
 import Chart from '../pages/Chart.vue'
 
 Vue.use(VueRouter);
-Vue.use(Vuex)
+Vue.use(Vuex);
+Vue.component('chart', Chart);
+
 const routes = [
     { path: '/', component: Home },
     { path: '/upload', component: Upload },
