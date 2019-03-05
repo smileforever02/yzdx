@@ -63,14 +63,14 @@ public class RecordService {
 
     // fromDate and toDate format should be YYYY-MM-DD
     public AvgRecord genAvgRecordDetailByUser(String userId, String bodyPart, String fromDate, String toDate,
-                                              String name, String description) throws ParseException {
+                                              String avgRecordName, String description) throws ParseException {
         List<Object> list = detailRepository.genAvgRecordDetailByUser(userId, bodyPart, fromDate, toDate);
         AvgRecord record = new AvgRecord();
         record.setUserId(userId);
         record.setBodyPart(bodyPart);
         record.setFromDate(new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
         record.setToDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
-        record.setName(name);
+        record.setAvgRecordName(avgRecordName);
         record.setDescription(description);
         record.setCreatedDate(new Date());
 
@@ -101,7 +101,7 @@ public class RecordService {
 
     // fromDate and toDate format should be YYYY-MM-DD
     public AvgRecord genAvgRecordDetail(String bodyPart, String gender, double fromAge, double toAge,
-                                        String fromDate, String toDate, String name, String description) throws ParseException {
+                                        String fromDate, String toDate, String avgRecordName, String description) throws ParseException {
         List<Object> list = detailRepository.genAvgRecordDetail(bodyPart, gender, fromAge, toAge, fromDate, toDate);
 
         AvgRecord record = new AvgRecord();
@@ -111,7 +111,7 @@ public class RecordService {
         record.setToAge(toAge);
         record.setFromDate(new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
         record.setToDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
-        record.setName(name);
+        record.setAvgRecordName(avgRecordName);
         record.setDescription(description);
         record.setCreatedDate(new Date());
 

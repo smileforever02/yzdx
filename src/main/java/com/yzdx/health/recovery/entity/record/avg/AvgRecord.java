@@ -33,7 +33,7 @@ public class AvgRecord {
     @OneToMany(mappedBy = "avgRecord", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<AvgRecordDetail> avgRecordDetails;
 
-    private String name;
+    private String avgRecordName;
     private String description;
 
     private Date createdDate;
@@ -118,12 +118,12 @@ public class AvgRecord {
         this.avgRecordDetails = avgRecordDetails;
     }
 
-    public String getName() {
-        return name;
+    public String getAvgRecordName() {
+        return avgRecordName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAvgRecordName(String avgRecordName) {
+        this.avgRecordName = avgRecordName;
     }
 
     public String getDescription() {
