@@ -5,10 +5,10 @@
                 <label for="reportName">报表名称</label>
                 <input class="form-control" id="reportName" placeholder="报表名称" v-model.lazy.trim="reportName">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="description">报表名描述</label>
                 <input class="form-control" id="description" placeholder="报表名描述" v-model.lazy.trim="description">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="userName">姓名</label>
                 <input class="form-control" id="userName" placeholder="姓名" v-model.lazy.trim="userName">
@@ -43,22 +43,26 @@
                 <label>--</label>
                 <input class="form-control" id="toDate" placeholder="2019-01-01 12:00:00" v-model.lazy.trim="toDate">
             </div>
+            <div class="form-group">
+                <label for="isAvg">搜索平均</label>
+                <input class="form-control" v-model="isAvg" type="checkbox" id="isAvg">
+            </div>
             <button type="submit" class="btn btn-primary">搜索</button>
             <button type="reset" class="btn">重置</button>
             <button class="btn" type="button" @click="calculateAvg">统计平均</button>
-            <button class="btn" type="button" @click="checkAvg">平均图</button>
+            <button class="btn" type="button" @click="checkAvg">比较图</button>
         </form>
         <div class="records-list" style="border-right: 2px solid #7d7d7d;">
             <ul class="item-list">
                 <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId">
-                    <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
+                    <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item, false)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
                 </li>
             </ul>
         </div>
         <div class="records-list">
             <ul class="item-list">
-                <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId">
-                    <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
+                <li v-for="item in avgItems" v-bind:key="item.avgRecordId" v-bind:data-avgRecordId="item.avgRecordId">
+                    <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item, true)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.avgRecordName + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
                 </li>
             </ul>
         </div>
@@ -74,6 +78,7 @@ import MessageBox from '../services/MessageBox';
 export default {
     data(){
         return {
+            isAvg: false,
             description: null,
             userName: null,
             reportName: null,
@@ -84,7 +89,8 @@ export default {
             fromDate: null,
             toDate: null,
             items: [],
-            showChart: true,
+            avgItems: [],
+            showChart: false,
             chartQuery: null
         }
     },
@@ -96,19 +102,33 @@ export default {
     },
     methods: {
         submit(){
-            console.log(this.items);
-            Services.search(this.__fetchParam())
-                .done((data) => {
-                    console.log(data)
-                    this.items = data;
-                    this.items.forEach(i => i.checked = false);
-                    // this.$router.push('/user/' + this.userId);
-                }).fail(() => console.log(arguments))
+            // console.log(this.items);
+            console.log(this.isAvg);
+            if(this.isAvg){
+                Services.searchAvg(this.__fetchParam())
+                    .done((data) => {
+                        console.log(data)
+                        this.avgItems = data;
+                        this.avgItems.forEach(i => i.checked = false);
+                        // this.$router.push('/user/' + this.userId);
+                    }).fail(() => console.log(arguments));
+            }else{
+                Services.search(this.__fetchParam())
+                    .done((data) => {
+                        console.log(data)
+                        this.items = data;
+                        this.items.forEach(i => i.checked = false);
+                        // this.$router.push('/user/' + this.userId);
+                    }).fail(() => console.log(arguments));
+            }
         },
-        display(user){
+        display(record, isAvg){
             console.log('check user');
-            console.log(user);
-            this.chartQuery = user;
+            console.log(record);
+            this.chartQuery = {
+                record: record,
+                isAvg: isAvg
+            };
             this.showChart = true;
             // this.$store.commit('updateChartQuery', user);
             // this.$router.push('/chart');
@@ -179,7 +199,7 @@ export default {
         },
         __fetchParam(){
             return {
-                description: this.description, 
+                // description: this.description, 
                 recordName: this.reportName, 
                 userId: this.userName, 
                 fromAge: this.fromAge, 

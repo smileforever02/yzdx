@@ -3,10 +3,19 @@ import $ from '../utils'
 const mask = $('#mask');
 export default {
     search(query){
-        return this.get('/getRecordsByUser?' + this._toQueryString(query))
+        return this.get('/getRecords?' + this._toQueryString(query))
+    },
+    searchAvg(query){
+        return this.get('/getAvgRecords?' + this._toQueryString(query))
     },
     genAvgRecordDetail(data){
         return this.post('/genAvgRecordDetail', data);
+    },
+    queryRecordDetail(query){
+        return this.get('/getRecordDetail?' + this._toQueryString(query))
+    },
+    queryAvgRecordDetail(query){
+        return this.get('/getAvgRecordDetail?' + this._toQueryString(query))
     },
     uploadDataFile(files){
         let deffer = $.Deferred()
@@ -36,6 +45,7 @@ export default {
         return this.send(url, 'GET');
     },
     send(url, method, data){
+        let deffer = $.Deferred()
         let options = {
             url: url,
             type: method,
@@ -45,7 +55,11 @@ export default {
             options.data = JSON.stringify(data);
             options.contentType = "application/json; charset=utf-8";
         }
-        return $.ajax(options);
+        mask.show();
+        $.ajax(options).done(data => {mask.hide();deffer.resolve(data)})
+            .fail((arg1, arg2, arg3) => deffer.reject(arg1, arg2, arg3))
+            .always(() => mask.hide());
+        return deffer;
     },
     _toQueryString(query){
         let q = [];

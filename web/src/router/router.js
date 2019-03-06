@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import Home from '../pages/Home.vue'
 import Upload from '../pages/Upload.vue'
 import Search from '../pages/Search.vue'
-import Chart from '../pages/Chart.vue'
+import Chart from '../components/Chart.vue'
 
 Vue.use(VueRouter);
 Vue.use(Vuex);

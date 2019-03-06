@@ -19,8 +19,8 @@
         </form>
         <div class="chart-container" style="position: relative; width:90%;margin: auto;margin-top: 5em;">
             <canvas id="scoreChart"></canvas>
-            <span v-on:mousedown="move(-1)" class="glyphicon glyphicon-chevron-left chart-mover" aria-hidden="true" style="left: 1em;"></span>
-            <span v-on:mousedown="move(1)" class="glyphicon glyphicon-chevron-right chart-mover" aria-hidden="true" style="right: 1em;"></span>
+            <span @mouseenter="startMove(-1)" @mouseleave="stop()" class="glyphicon glyphicon-chevron-left chart-mover" aria-hidden="true" style="left: 1em;"></span>
+            <span @mouseenter="startMove(1)" @mouseleave="stop()" class="glyphicon glyphicon-chevron-right chart-mover" aria-hidden="true" style="right: 1em;"></span>
         </div>
     </div>
 </template>
@@ -30,10 +30,11 @@ import $ from "../utils"
 import Services from '../services/Services'
 import MessageBox from '../services/MessageBox';
 
-const MAX_DISPLAYED = 300;
-const STEP = 10;
+const MAX_DISPLAYED = 100;
+const STEP = 1;
 const LEFT = -1;
 const RIGHT = 1;
+const SPEED = 250;
 
 export default {
     props: {
@@ -48,7 +49,8 @@ export default {
             maxDisplayed: MAX_DISPLAYED,
             chart: null,
             chartCfg: null,
-            chartData: {}
+            chartData: {},
+            tag: -1
         }
     },
     mounted(){
@@ -70,6 +72,13 @@ export default {
             }
             this.draw();
         },
+        startMove(direction){
+            clearInterval(this.tag);
+            this.tag = setInterval(() => this.move(direction), SPEED);
+        },
+        stop(){
+            clearInterval(this.tag);
+        },
         move(direction){
             console.log(`direction: ${direction}`)
             console.log(`startIdx: ${this.startIdx}`)
@@ -84,33 +93,69 @@ export default {
             this.startIdx += (direction * STEP);
             this.draw();
         },
-        initChartData(){
-            let size = 1000;
-            let labels = [];
-            let data1 = [];
-            let data2 = [];
-            for(let i = 0; i < size; i++){
-                labels.push(i+1);
-                data1.push(size - i);
-                data2.push(i);
+        initChartData(callback){
+            let record = this.chartQuery.record;
+            if(this.chartQuery.isAvg){
+                Services.queryAvgRecordDetail({recordId: this.chartQuery.record.recordId}).done(data => {
+                    this.__normalizeRecordDetail(data);
+                    this.__initChart(record.avgRecordName + '  ' + record.userId + '  ' + record.testDate + '  ' + record.bodyPart);
+                    callback();
+                }).fail(d => {
+                    MessageBox.warn('查询数据失败');
+                });
+            }else{
+                Services.queryRecordDetail({avgRecordId: this.chartQuery.record.avgRecordId}).done(data => {
+                    this.__normalizeRecordDetail(data);
+                    this.__initChart(record.userId + '  ' + record.testDate + '  ' + record.bodyPart);
+                    callback();
+                }).fail(d => {
+                    MessageBox.warn('查询数据失败');
+                });
             }
+        },
+        getDisplayedChartData(){
+            let end = Math.min(this.startIdx + this.maxDisplayed, this.chartData.size);
+            return {
+                labels: this.chartData.labels.slice(this.startIdx, end),
+                data1: this.chartData.data1.slice(this.startIdx, end),
+                data2: this.chartData.data2.slice(this.startIdx, end)
+            };
+        },
+        drawChart(){
+            this.initChartData(this.draw.bind(this));
+        },
+        draw(){
+            let displayedChartData = this.getDisplayedChartData();
+            let d = this.chartCfg.data;
+            d.labels = displayedChartData.labels;
+            d.datasets[0].data = displayedChartData.data1;
+            d.datasets[1].data = displayedChartData.data2;
+            this.chart.update(0);
+        },
+        __normalizeRecordDetail(data){
+            let size = data.length;
+            let labels = data.map(d => d.time);
+            let data1 = data.map(d => d.deltaCapPerc);
+            let data2 = data.map(d => d.power);
             this.chartData = {
                 size: size,
                 labels: labels,
                 data1: data1,
                 data2: data2
             };
+        },
+        __initChart(title){
             var lineChartData = {
                 labels: [],
                 datasets: [{
-                    label: 'data1',
+                    label: '电容',
                     borderColor: 'red',
                     backgroundColor: 'red',
                     fill: false,
                     data: [],
                     yAxisID: 'y-axis-1',
                 }, {
-                    label: 'data2',
+                    label: '力',
                     borderColor: 'blue',
                     backgroundColor: 'blue',
                     fill: false,
@@ -127,7 +172,7 @@ export default {
 					stacked: false,
 					title: {
 						display: true,
-						text: '数据中心'
+						text: title // record.userId + '  ' + record.testDate + '  ' + record.bodyPart
 					},
 					scales: {
 						yAxes: [{
@@ -149,27 +194,6 @@ export default {
 				}
 			};
 			this.chart = Chart.Line(document.getElementById('scoreChart').getContext('2d'), this.chartCfg);
-        },
-        getDisplayedChartData(){
-            let end = Math.min(this.startIdx + this.maxDisplayed, this.chartData.size);
-            return {
-                labels: this.chartData.labels.slice(this.startIdx, end),
-                data1: this.chartData.data1.slice(this.startIdx, end),
-                data2: this.chartData.data2.slice(this.startIdx, end)
-            };
-        },
-        drawChart(){
-            console.log(this.$store.state.chartDataQuery);
-            this.initChartData();
-            this.draw();
-        },
-        draw(){
-            let displayedChartData = this.getDisplayedChartData();
-            let d = this.chartCfg.data;
-            d.labels = displayedChartData.labels;
-            d.datasets[0].data = displayedChartData.data1;
-            d.datasets[1].data = displayedChartData.data2;
-            this.chart.update();
         }
     }
 }

@@ -1,0 +1,72 @@
+[{
+	"avgRecordId": "110011",
+	"userId": "张三",
+	"testDate": "2019-01-01 12:12:12",
+	"avgRecordName": "平均",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "110021",
+	"userId": "张三",
+	"testDate": "2019-01-01 12:12:12",
+	"avgRecordName": "平均",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "210031",
+	"userId": "李四",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "210041",
+	"userId": "U-Jams",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "310051",
+	"userId": "U-Larry",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },
+ {
+	"avgRecordId": "331001",
+	"userId": "U-Tom",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "441002",
+	"userId": "U-Kobe",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "551003",
+	"userId": "U-Kerry",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "661004",
+	"userId": "U-Jams",
+	"avgRecordName": "平均",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"bodyPart": "左胳膊"
+ },{
+	"avgRecordId": "771005",
+	"userId": "U-Larry",
+	"testDate": "2019-01-01 12:12:12",
+	"age": 18,
+	"avgRecordName": "平均",
+	"bodyPart": "左胳膊"
+ }]
