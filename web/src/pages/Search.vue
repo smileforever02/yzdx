@@ -50,7 +50,7 @@
             <button type="submit" class="btn btn-primary">搜索</button>
             <button type="reset" class="btn">重置</button>
             <button class="btn" type="button" @click="calculateAvg">统计平均</button>
-            <button class="btn" type="button" @click="checkAvg">比较图</button>
+            <button class="btn" type="button" @click="compare">比较图</button>
         </form>
         <div class="records-list" style="border-right: 2px solid #7d7d7d;">
             <ul class="item-list">
@@ -188,6 +188,20 @@ export default {
                 }]
             });
             dialog.open();
+        },
+        compare(){
+            let select = (this.items || []).filter(u => u.checked)[0];
+            let avgSelect = (this.avgItems || []).filter(u => u.checked)[0];
+            if(!select || !avgSelect){
+                MessageBox.info('请在左右两侧各自选择一行记录进行比较');
+                return;
+            }
+            this.chartQuery = {
+                record: select,
+                avgRecord: avgSelect,
+                isCompare: true
+            }
+            this.showChart = true;
         },
         checkAvg(){
             let selects = (this.items || []).filter(u => u.checked);

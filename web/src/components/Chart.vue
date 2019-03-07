@@ -94,9 +94,21 @@ export default {
             this.draw();
         },
         initChartData(callback){
+            if(this.chartQuery.isCompare){
+                $.when(Services.queryRecordDetail({recordId: this.chartQuery.record.recordId}),
+                    Services.queryAvgRecordDetail({avgRecordId: this.chartQuery.record.avgRecordId})).done((nor, avg) => {
+                         this.__normalizeRecordDetail(nor, avg);
+                         this.__initChart(this.chartQuery.record.userId + '  ' + this.chartQuery.avgRecord.avgRecordName + '  ' + this.chartQuery.record.testDate + '  ' + this.chartQuery.record.bodyPart + '  比较图');
+                         callback();
+                    }).fail(d => {
+                        MessageBox.warn('查询数据失败');
+                    });
+                return;
+            }
+
             let record = this.chartQuery.record;
             if(this.chartQuery.isAvg){
-                Services.queryAvgRecordDetail({recordId: this.chartQuery.record.recordId}).done(data => {
+                Services.queryAvgRecordDetail({avgRecordId: this.chartQuery.record.avgRecordId}).done(data => {
                     this.__normalizeRecordDetail(data);
                     this.__initChart(record.avgRecordName + '  ' + record.userId + '  ' + record.testDate + '  ' + record.bodyPart);
                     callback();
@@ -104,7 +116,7 @@ export default {
                     MessageBox.warn('查询数据失败');
                 });
             }else{
-                Services.queryRecordDetail({avgRecordId: this.chartQuery.record.avgRecordId}).done(data => {
+                Services.queryRecordDetail({recordId: this.chartQuery.record.recordId}).done(data => {
                     this.__normalizeRecordDetail(data);
                     this.__initChart(record.userId + '  ' + record.testDate + '  ' + record.bodyPart);
                     callback();
@@ -115,11 +127,16 @@ export default {
         },
         getDisplayedChartData(){
             let end = Math.min(this.startIdx + this.maxDisplayed, this.chartData.size);
-            return {
+            let d = {
                 labels: this.chartData.labels.slice(this.startIdx, end),
                 data1: this.chartData.data1.slice(this.startIdx, end),
                 data2: this.chartData.data2.slice(this.startIdx, end)
             };
+            if(this.chartQuery.isCompare){
+                d.data11 = this.chartData.data11.slice(this.startIdx, end);
+                d.data22 = this.chartData.data22.slice(this.startIdx, end);
+            }
+            return d;
         },
         drawChart(){
             this.initChartData(this.draw.bind(this));
@@ -130,9 +147,13 @@ export default {
             d.labels = displayedChartData.labels;
             d.datasets[0].data = displayedChartData.data1;
             d.datasets[1].data = displayedChartData.data2;
+            if(this.chartQuery.isCompare){
+                d.datasets[2].data = displayedChartData.data11;
+                d.datasets[3].data = displayedChartData.data22;
+            }
             this.chart.update(0);
         },
-        __normalizeRecordDetail(data){
+        __normalizeRecordDetail(data, _data){
             let size = data.length;
             let labels = data.map(d => d.time);
             let data1 = data.map(d => d.deltaCapPerc);
@@ -143,6 +164,12 @@ export default {
                 data1: data1,
                 data2: data2
             };
+            if(_data){
+                size = Math.min(size, _data.length);
+                this.chartData.size = size;
+                this.chartData.data11 = _data.map(d => d.deltaCapPerc);
+                this.chartData.data22 = _data.map(d => d.power);
+            }
         },
         __initChart(title){
             var lineChartData = {
@@ -163,7 +190,24 @@ export default {
                     yAxisID: 'y-axis-2'
                 }]
             };
-
+            if(this.chartQuery.isCompare){
+                lineChartData.datasets.push({
+                    label: '平均电容',
+                    borderColor: 'yellow',
+                    backgroundColor: 'yellow',
+                    fill: false,
+                    data: [],
+                    yAxisID: 'y-axis-1',
+                });
+                lineChartData.datasets.push({
+                    label: '平均力',
+                    borderColor: 'green',
+                    backgroundColor: 'green',
+                    fill: false,
+                    data: [],
+                    yAxisID: 'y-axis-2',
+                });
+            }
             this.chartCfg = {
 				data: lineChartData,
 				options: {
