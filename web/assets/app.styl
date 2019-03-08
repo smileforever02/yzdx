@@ -99,7 +99,7 @@ li
   position relative
   height lineHeight
   line-height lineHeight
-  background #cecece
+  // background #cecece
   margin-top liMargin
   padding 0 liMargin 0 liMargin
   cursor pointer
@@ -213,3 +213,26 @@ li
   opacity 0.35
   background white url(/static/img/spinner.gif) center no-repeat
   z-index 1000
+
+.grid-header, .grid-row
+  display flex
+  flex-direction row
+  flex-wrap nowrap
+  margin-top 1em
+.grid-header
+  border-bottom 1px solid gray
+  background: dodgerblue;
+  color: lightgoldenrodyellow;
+.grid-row
+  background: #e8e8e8;
+  color: #000000;
+.grid-content
+  padding-top 1em
+.grid-column
+  width 2em
+  flex-grow 1
+  text-align center
+  word-break: break-all;
+  white-space: nowrap;
+.grid-column-first
+  flex-grow 0

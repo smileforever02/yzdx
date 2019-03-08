@@ -54,15 +54,30 @@
         </form>
         <div class="records-list" style="border-right: 2px solid #7d7d7d;">
             <ul class="item-list">
-                <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId">
-                    <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item, false)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
+                <li class="grid-header">
+                    <div class="grid-column grid-column-first">选择</div><div class="grid-column">姓名</div><div class="grid-column">时间</div><div class="grid-column">部位</div>
+                </li>
+                <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId" class="grid-row">
+                    <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
+                    <div @click="display(item, false)" class="grid-column">{{item.userId}}</div>
+                    <div @click="display(item, false)" class="grid-column">{{item.testDate}}</div>
+                    <div @click="display(item, false)" class="grid-column">{{item.bodyPart}}</div>
+                    <!-- <span v-on:click="display(item, false)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span> -->
                 </li>
             </ul>
         </div>
         <div class="records-list">
             <ul class="item-list">
-                <li v-for="item in avgItems" v-bind:key="item.avgRecordId" v-bind:data-avgRecordId="item.avgRecordId">
-                    <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item, true)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.avgRecordName + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span>
+                <li class="grid-header">
+                    <div class="grid-column grid-column-first">选择</div><div class="grid-column">报表名</div><div class="grid-column">姓名</div><div class="grid-column">时间</div><div class="grid-column">部位</div>
+                </li>
+                <li v-for="item in avgItems" v-bind:key="item.avgRecordId" v-bind:data-avgRecordId="item.avgRecordId" class="grid-row">
+                    <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
+                    <div @click="display(item, true)" class="grid-column">{{item.userId}}</div>
+                    <div @click="display(item, true)" class="grid-column">{{item.avgRecordName}}</div>
+                    <div @click="display(item, true)" class="grid-column">{{item.testDate}}</div>
+                    <div @click="display(item, true)" class="grid-column">{{item.bodyPart}}</div>
+                    <!-- <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item, true)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.avgRecordName + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span> -->
                 </li>
             </ul>
         </div>
