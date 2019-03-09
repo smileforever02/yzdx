@@ -73,8 +73,8 @@
                 </li>
                 <li v-for="item in avgItems" v-bind:key="item.avgRecordId" v-bind:data-avgRecordId="item.avgRecordId" class="grid-row">
                     <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
-                    <div @click="display(item, true)" class="grid-column">{{item.userId}}</div>
                     <div @click="display(item, true)" class="grid-column">{{item.avgRecordName}}</div>
+                    <div @click="display(item, true)" class="grid-column">{{item.userId}}</div>
                     <div @click="display(item, true)" class="grid-column">{{item.testDate}}</div>
                     <div @click="display(item, true)" class="grid-column">{{item.bodyPart}}</div>
                     <!-- <input type="checkbox" :value="item.checked" v-model="item.checked"><span v-on:click="display(item, true)">{{item.userId + '&nbsp;&nbsp;&nbsp;' + item.avgRecordName + '&nbsp;&nbsp;&nbsp;' + item.testDate + '&nbsp;&nbsp;&nbsp;' + item.bodyPart}}</span> -->

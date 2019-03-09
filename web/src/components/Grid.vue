@@ -38,6 +38,7 @@ export default {
     },
     data(){
         return {
+            selected: []
         };
     },
     mounted(){
@@ -46,8 +47,16 @@ export default {
     methods: {
         onChange(record, selected){
             if(selected){
+                this.selected.push(record);
                 this.$emit('selected', record);
+            }else{
+                let idx = this.selected.indexOf(record);
+                idx >= 0 && this.selected.splice(idx, 1);
             }
+        },
+        getSelected(){
+            return this.selected.map(r => r);
+            // return this.selected;
         }
     }
 }

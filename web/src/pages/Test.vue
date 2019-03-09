@@ -1,6 +1,10 @@
 <template>
     <div class="full-width" style="padding: 2em 0 0 0;height: 100%;">
-        <grid :headers="headers" :columns="columns" v-on:selected="onSelectedRecord"></grid>
+        <grid :headers="headers" :columns="columns" v-on:selected="onSelectedRecord" ref="grid"></grid>
+        <div>
+            <!-- <input type="button" @click="checkSelected"> -->
+            <button @click="checkSelected">Check Selected</button>
+        </div>
     </div>
 </template>
 
@@ -35,6 +39,9 @@ export default {
     methods: {
         onSelectedRecord(record){
             console.log(record);
+        },
+        checkSelected(){
+            console.log(this.$refs.grid.getSelected());
         }
     }
 }
