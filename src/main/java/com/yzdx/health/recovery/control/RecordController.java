@@ -9,7 +9,6 @@ import com.yzdx.health.recovery.service.AvgRecordDetailService;
 import com.yzdx.health.recovery.service.AvgRecordService;
 import com.yzdx.health.recovery.service.RecordDetailService;
 import com.yzdx.health.recovery.service.RecordService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,20 +31,10 @@ public class RecordController {
     AvgRecordDetailService avgRecordDetailService;
 
     //fromDate and toDate should be in format YYYY-MM-DD
-    public AvgRecord genAvgRecordDetailByUser(JsonParam param) throws ParseException {
-        return recordService.genAvgRecordDetailByUser(param.getUserId(), param.getBodyPart(), param.getFromDate(), param.getToDate(),
-                param.getAvgRecordName(), param.getDescription());
-    }
-
-    //fromDate and toDate should be in format YYYY-MM-DD
-    @PostMapping("/genAvgRecordDetail")
+    @PostMapping("/genAvgRecord")
     public AvgRecord genAvgRecordDetail(@RequestBody JsonParam param) throws ParseException {
-        if (StringUtils.isNotBlank(param.getUserId())) {
-            return genAvgRecordDetailByUser(param);
-        } else {
-            return recordService.genAvgRecordDetail(param.getBodyPart(), param.getGender(), param.getFromAge(), param.getToAge(),
-                    param.getFromDate(), param.getToDate(), param.getAvgRecordName(), param.getDescription());
-        }
+        return recordService.genAvgRecordDetail(param.getUserId(), param.getBodyPart(), param.getGender(), param.getFromAge(), param.getToAge(),
+                param.getFromDate(), param.getToDate(), param.getAvgRecordName(), param.getDescription());
     }
 
     @GetMapping("/getRecords")

@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -32,8 +34,8 @@ public class RecordService {
     @Autowired
     AvgRecordService avgRecordService;
 
-    @Autowired
-    EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager em;
 
     public Record createRecord(Record record) {
         return repository.save(record);
@@ -56,49 +58,38 @@ public class RecordService {
     }
 
     // fromDate and toDate format should be YYYY-MM-DD
-    public AvgRecord genAvgRecordDetailByUser(String userId, String bodyPart, String fromDate, String toDate,
-                                              String avgRecordName, String description) throws ParseException {
-        List<Object> list = detailRepository.genAvgRecordDetailByUser(userId, bodyPart, fromDate, toDate);
+    public AvgRecord genAvgRecordDetail(String userId, String bodyPart, String gender, double fromAge, double toAge,
+                                        String fromDate, String toDate, String avgRecordName, String description) throws ParseException {
+        StringBuffer sql = new StringBuffer("select time as time, avg(deltaCapPerc) as deltaCapPerc, avg(power) as power, count(1) as count from RecordDetail" +
+                " where record in (select r from Record as r where 1=1");
+        if (StringUtils.isNotBlank(userId)) {
+            sql.append(" and userId='").append(userId).append("'");
+        }
+        if (StringUtils.isNotBlank(bodyPart)) {
+            sql.append(" and bodyPart='").append(bodyPart).append("'");
+        }
+        if (StringUtils.isNotBlank(gender)) {
+            sql.append(" and gender='").append(gender).append("'");
+        }
+        if (fromAge > 0) {
+            sql.append(" and age>=").append(fromAge);
+        }
+        if (toAge > 0) {
+            sql.append(" and age<=").append(toAge);
+        }
+        if (StringUtils.isNotBlank(fromDate)) {
+            sql.append(" and testDate>='").append(fromDate).append("'");
+        }
+        if (StringUtils.isNotBlank(toDate)) {
+            sql.append(" and testDate<='").append(toDate).append("'");
+        }
+        sql.append(") group by time order by time");
+
+        Query query = em.createQuery(sql.toString());
+        List list = query.getResultList();
+
         AvgRecord record = new AvgRecord();
         record.setUserId(userId);
-        record.setBodyPart(bodyPart);
-        record.setFromDate(new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
-        record.setToDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
-        record.setAvgRecordName(avgRecordName);
-        record.setDescription(description);
-        record.setCreatedDate(new Date());
-
-        Set<AvgRecordDetail> detailSet = new HashSet<>();
-        long maxCount = 0;
-        for (Object o : list) {
-            Object[] arr = (Object[]) o;
-            AvgRecordDetail detail = new AvgRecordDetail();
-            detail.setTime((double) arr[0]);
-            detail.setDeltaCapPerc((double) arr[1]);
-            detail.setPower((double) arr[2]);
-            detail.setRecordCount(((BigInteger) arr[3]).intValue());
-            detail.setCreatedDate(new Date());
-
-            detail.setAvgRecord(record);
-            detailSet.add(detail);
-
-            if (detail.getRecordCount() > maxCount) {
-                maxCount = detail.getRecordCount();
-            }
-        }
-
-        record.setAvgRecordDetails(detailSet);
-        record.setRecordCount(maxCount);
-        return avgRecordService.saveAvgRecord(record);
-
-    }
-
-    // fromDate and toDate format should be YYYY-MM-DD
-    public AvgRecord genAvgRecordDetail(String bodyPart, String gender, double fromAge, double toAge,
-                                        String fromDate, String toDate, String avgRecordName, String description) throws ParseException {
-        List<Object> list = detailRepository.genAvgRecordDetail(bodyPart, gender, fromAge, toAge, fromDate, toDate);
-
-        AvgRecord record = new AvgRecord();
         record.setBodyPart(bodyPart);
         record.setGender(gender);
         record.setFromAge(fromAge);
@@ -109,6 +100,7 @@ public class RecordService {
         record.setDescription(description);
         record.setCreatedDate(new Date());
 
+        long maxRecordCount = 0;
         Set<AvgRecordDetail> detailSet = new HashSet<>();
         for (Object o : list) {
             Object[] arr = (Object[]) o;
@@ -116,13 +108,16 @@ public class RecordService {
             detail.setTime((double) arr[0]);
             detail.setDeltaCapPerc((double) arr[1]);
             detail.setPower((double) arr[2]);
-            detail.setRecordCount(((BigInteger) arr[3]).intValue());
+            long count = (long) arr[3];
+            if (count > maxRecordCount) {
+                maxRecordCount = count;
+            }
+            detail.setRecordCount(count);
             detail.setCreatedDate(new Date());
-
             detail.setAvgRecord(record);
             detailSet.add(detail);
         }
-
+        record.setRecordCount(maxRecordCount);
         record.setAvgRecordDetails(detailSet);
         return avgRecordService.saveAvgRecord(record);
     }

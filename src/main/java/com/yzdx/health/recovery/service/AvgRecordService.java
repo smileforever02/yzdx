@@ -43,36 +43,36 @@ public class AvgRecordService {
             public Predicate toPredicate(Root<AvgRecord> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new LinkedList<>();
 
-                if (!StringUtils.isEmpty(userId)) {
+                if (StringUtils.isNotBlank(userId)) {
                     predicates.add(criteriaBuilder.equal(root.get("userId"), userId));
                 }
-                if (!StringUtils.isEmpty(bodyPart)) {
+                if (StringUtils.isNotBlank(bodyPart)) {
                     predicates.add(criteriaBuilder.like(root.get("bodyPart"), "%" + bodyPart + "%"));
                 }
-                if (!StringUtils.isEmpty(gender)) {
+                if (StringUtils.isNotBlank(gender)) {
                     predicates.add(criteriaBuilder.equal(root.get("gender"), gender));
                 }
-                if (!StringUtils.isEmpty(fromAge)) {
-                    predicates.add(criteriaBuilder.equal(root.get("age"), Double.parseDouble(fromAge)));
+                if (StringUtils.isNotBlank(fromAge)) {
+                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("fromAge"), Double.parseDouble(fromAge)));
                 }
-                if (!StringUtils.isEmpty(toAge)) {
-                    predicates.add(criteriaBuilder.equal(root.get("age"), Double.parseDouble(toAge)));
+                if (StringUtils.isNotBlank(toAge)) {
+                    predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("toAge"), Double.parseDouble(toAge)));
                 }
-                if (!StringUtils.isEmpty(fromDate)) {
+                if (StringUtils.isNotBlank(fromDate)) {
                     try {
-                        predicates.add(criteriaBuilder.equal(root.get("fromDate"), new SimpleDateFormat("YYYY-MM-DD").parse(fromDate)));
+                        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("fromDate"), new SimpleDateFormat("YYYY-MM-DD").parse(fromDate)));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
-                if (!StringUtils.isEmpty(toDate)) {
+                if (StringUtils.isNotBlank(toDate)) {
                     try {
-                        predicates.add(criteriaBuilder.equal(root.get("toDate"), new SimpleDateFormat("YYYY-MM-DD").parse(toDate)));
+                        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("toDate"), new SimpleDateFormat("YYYY-MM-DD").parse(toDate)));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                 }
-                if(!StringUtils.isEmpty(avgRecordName)) {
+                if(StringUtils.isNotBlank(avgRecordName)) {
                     predicates.add(criteriaBuilder.like(root.get("avgRecordName"), "%" + avgRecordName + "%"));
                 }
 
