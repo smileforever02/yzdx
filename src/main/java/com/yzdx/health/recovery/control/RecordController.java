@@ -31,17 +31,17 @@ public class RecordController {
     AvgRecordDetailService avgRecordDetailService;
 
     //fromDate and toDate should be in format YYYY-MM-DD
-    @PostMapping("/genAvgRecord")
+    @PostMapping("/genAvgRecordDetail")
     public AvgRecord genAvgRecordDetail(@RequestBody JsonParam param) throws ParseException {
         return recordService.genAvgRecordDetail(param.getUserId(), param.getBodyPart(), param.getGender(), param.getFromAge(), param.getToAge(),
                 param.getFromDate(), param.getToDate(), param.getAvgRecordName(), param.getDescription());
     }
 
     @GetMapping("/getRecords")
-    public List<Record> getRecords(@RequestParam("userId") final String userId, @RequestParam("bodyPart") final String bodyPart,
-                                   @RequestParam("gender") final String gender, @RequestParam("fromAge") final String fromAge,
-                                   @RequestParam("toAge") final String toAge, @RequestParam("fromDate") final String fromDate,
-                                   @RequestParam("toDate") final String toDate) {
+    public List<Record> getRecords(@RequestParam(value = "userId", required = false) final String userId, @RequestParam(value = "bodyPart", required = false) final String bodyPart,
+                                   @RequestParam(value = "gender", required = false) final String gender, @RequestParam(value = "fromAge", required = false) final String fromAge,
+                                   @RequestParam(value = "toAge", required = false) final String toAge, @RequestParam(value = "fromDate", required = false) final String fromDate,
+                                   @RequestParam(value = "toDate", required = false) final String toDate) {
         return recordService.findAll(userId, bodyPart, gender, fromAge, toAge, fromDate, toDate);
     }
 
@@ -51,10 +51,10 @@ public class RecordController {
     }
 
     @GetMapping("/getAvgRecords")
-    public List<AvgRecord> getAvgRecords(@RequestParam("userId") final String userId, @RequestParam("bodyPart") final String bodyPart,
-                                         @RequestParam("gender") final String gender, @RequestParam("fromAge") final String fromAge,
-                                         @RequestParam("toAge") final String toAge, @RequestParam("fromDate") final String fromDate,
-                                         @RequestParam("toDate") final String toDate, @RequestParam("avgRecordName") final String avgRecordName) {
+    public List<AvgRecord> getAvgRecords(@RequestParam(value = "userId", required = false) final String userId, @RequestParam(value = "bodyPart", required = false) final String bodyPart,
+                                         @RequestParam(value = "gender", required = false) final String gender, @RequestParam(value = "fromAge", required = false) final String fromAge,
+                                         @RequestParam(value = "toAge", required = false) final String toAge, @RequestParam(value = "fromDate", required = false) final String fromDate,
+                                         @RequestParam(value = "toDate", required = false) final String toDate, @RequestParam(value = "avgRecordName", required = false) final String avgRecordName) {
         return avgRecordService.findAll(userId, bodyPart, gender, fromAge, toAge, fromDate, toDate, avgRecordName);
     }
 

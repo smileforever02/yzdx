@@ -65,10 +65,10 @@ public class RecordService {
         if (StringUtils.isNotBlank(userId)) {
             sql.append(" and userId='").append(userId).append("'");
         }
-        if (StringUtils.isNotBlank(bodyPart)) {
+        if (StringUtils.isNotBlank(bodyPart) && !"ALL".equalsIgnoreCase(bodyPart)) {
             sql.append(" and bodyPart='").append(bodyPart).append("'");
         }
-        if (StringUtils.isNotBlank(gender)) {
+        if (StringUtils.isNotBlank(gender) && !"ALL".equalsIgnoreCase(bodyPart)) {
             sql.append(" and gender='").append(gender).append("'");
         }
         if (fromAge > 0) {
@@ -94,8 +94,12 @@ public class RecordService {
         record.setGender(gender);
         record.setFromAge(fromAge);
         record.setToAge(toAge);
-        record.setFromDate(new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
-        record.setToDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
+        if (StringUtils.isNotBlank(fromDate)) {
+            record.setFromDate(new SimpleDateFormat("yyyy-MM-dd").parse(fromDate));
+        }
+        if (StringUtils.isNotBlank(toDate)) {
+            record.setToDate(new SimpleDateFormat("yyyy-MM-dd").parse(toDate));
+        }
         record.setAvgRecordName(avgRecordName);
         record.setDescription(description);
         record.setCreatedDate(new Date());
@@ -135,10 +139,10 @@ public class RecordService {
                 if (!StringUtils.isEmpty(userId)) {
                     predicates.add(criteriaBuilder.equal(root.get("userId"), userId));
                 }
-                if (!StringUtils.isEmpty(bodyPart)) {
+                if (!StringUtils.isEmpty(bodyPart) && !"ALL".equalsIgnoreCase(bodyPart)) {
                     predicates.add(criteriaBuilder.like(root.get("bodyPart"), "%" + bodyPart + "%"));
                 }
-                if (!StringUtils.isEmpty(gender)) {
+                if (!StringUtils.isEmpty(gender) && !"ALL".equalsIgnoreCase(gender)) {
                     predicates.add(criteriaBuilder.equal(root.get("gender"), gender));
                 }
                 if (!StringUtils.isEmpty(fromAge)) {
