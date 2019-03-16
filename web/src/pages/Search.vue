@@ -30,11 +30,23 @@
             <div class="form-group">
                 <label for="bodyPart">部位</label>
                 <select class="form-control" id="bodyPart" v-model.lazy.trim="bodyPart">
-                    <option value="ALL" selected>全部</option>
-                    <option value="LL">左胳膊</option>
-                    <option value="RL">右胳膊</option>
-                    <option value="LH">左手指</option>
-                    <option value="RH">右手指</option>
+                    <option value="0" selected>全部</option>
+                    <option value="1">左拇指</option>
+                    <option value="2">左食指</option>
+                    <option value="3">左中指</option>
+                    <option value="4">左无名指</option>
+                    <option value="5">左小指</option>
+                    <option value="6">右拇指</option>
+                    <option value="7">右食指</option>
+                    <option value="8">右中指</option>
+                    <option value="9">右无名指</option>
+                    <option value="10">右小指</option>
+                    <option value="11">左腕关节</option>
+                    <option value="12">右腕关节</option>
+                    <option value="13">左肘关节</option>
+                    <option value="14">左肘关节</option>
+                    <option value="15">右膝关节</option>
+                    <option value="16">右膝关节</option>
                 </select>
             </div>
             <div class="form-group">
@@ -55,10 +67,11 @@
         <div class="records-list" style="border-right: 2px solid #7d7d7d;">
             <ul class="item-list">
                 <li class="grid-header">
-                    <div class="grid-column grid-column-first">选择</div><div class="grid-column">姓名</div><div class="grid-column">时间</div><div class="grid-column">部位</div>
+                    <div class="grid-column grid-column-first">选择</div><div class="grid-column">文件名</div><div class="grid-column">姓名</div><div class="grid-column">时间</div><div class="grid-column">部位</div>
                 </li>
                 <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId" class="grid-row">
                     <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
+                    <div @click="display(item, true)" class="grid-column">{{item.fileName}}</div>
                     <div @click="display(item, false)" class="grid-column">{{item.userId}}</div>
                     <div @click="display(item, false)" class="grid-column">{{item.testDate}}</div>
                     <div @click="display(item, false)" class="grid-column">{{item.bodyPart}}</div>
@@ -69,7 +82,7 @@
         <div class="records-list">
             <ul class="item-list">
                 <li class="grid-header">
-                    <div class="grid-column grid-column-first">选择</div><div class="grid-column">报表名</div><div class="grid-column">姓名</div><div class="grid-column">时间</div><div class="grid-column">部位</div>
+                    <div class="grid-column grid-column-first">选择</div><div class="grid-column">报表名</div> <div class="grid-column">姓名</div><div class="grid-column">测试时间</div><div class="grid-column">部位</div>
                 </li>
                 <li v-for="item in avgItems" v-bind:key="item.avgRecordId" v-bind:data-avgRecordId="item.avgRecordId" class="grid-row">
                     <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
@@ -100,7 +113,7 @@ export default {
             fromAge: null,
             toAge: null,
             gender: 'ALL',
-            bodyPart: 'ALL',
+            bodyPart: 0,
             fromDate: null,
             toDate: null,
             items: [],
