@@ -30,23 +30,23 @@
             <div class="form-group">
                 <label for="bodyPart">部位</label>
                 <select class="form-control" id="bodyPart" v-model.lazy.trim="bodyPart">
-                    <option value="0" selected>全部</option>
-                    <option value="1">左拇指</option>
-                    <option value="2">左食指</option>
-                    <option value="3">左中指</option>
-                    <option value="4">左无名指</option>
-                    <option value="5">左小指</option>
-                    <option value="6">右拇指</option>
-                    <option value="7">右食指</option>
-                    <option value="8">右中指</option>
-                    <option value="9">右无名指</option>
-                    <option value="10">右小指</option>
-                    <option value="11">左腕关节</option>
-                    <option value="12">右腕关节</option>
-                    <option value="13">左肘关节</option>
-                    <option value="14">左肘关节</option>
-                    <option value="15">右膝关节</option>
-                    <option value="16">右膝关节</option>
+                    <option value="所有部位" selected>所有部位</option>
+                    <option value="左拇指">左拇指</option>
+                    <option value="左食指">左食指</option>
+                    <option value="左中指">左中指</option>
+                    <option value="左无名指">左无名指</option>
+                    <option value="左小指">左小指</option>
+                    <option value="右拇指">右拇指</option>
+                    <option value="右食指">右食指</option>
+                    <option value="右中指">右中指</option>
+                    <option value="右无名指">右无名指</option>
+                    <option value="右小指">右小指</option>
+                    <option value="左腕关节">左腕关节</option>
+                    <option value="右腕关节">右腕关节</option>
+                    <option value="左肘关节">左肘关节</option>
+                    <option value="右肘关节">右肘关节</option>
+                    <option value="左膝关节">左膝关节</option>
+                    <option value="右膝关节">右膝关节</option>
                 </select>
             </div>
             <div class="form-group">
@@ -64,13 +64,13 @@
             <button class="btn" type="button" @click="calculateAvg">统计平均</button>
             <button class="btn" type="button" @click="compare">比较图</button>
         </form>
-        <div class="records-list" style="border-right: 2px solid #7d7d7d;">
+        <div class="records-list r" style="border-right: 2px solid #7d7d7d;">
             <ul class="item-list">
                 <li class="grid-header">
                     <div class="grid-column grid-column-first">选择</div><div class="grid-column">文件名</div><div class="grid-column">姓名</div><div class="grid-column">时间</div><div class="grid-column">部位</div>
                 </li>
                 <li v-for="item in items" v-bind:key="item.recordId" v-bind:data-recordId="item.recordId" class="grid-row">
-                    <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
+                    <div class="grid-column grid-column-first"><input v-bind:data-rid="item.recordId"  @change="selectRecord(item)" type="checkbox" :value="item.checked" v-model="item.checked"></div>
                     <div @click="display(item, true)" class="grid-column">{{item.fileName}}</div>
                     <div @click="display(item, false)" class="grid-column">{{item.userId}}</div>
                     <div @click="display(item, false)" class="grid-column">{{item.testDate}}</div>
@@ -79,13 +79,13 @@
                 </li>
             </ul>
         </div>
-        <div class="records-list">
+        <div class="records-list avg">
             <ul class="item-list">
                 <li class="grid-header">
                     <div class="grid-column grid-column-first">选择</div><div class="grid-column">报表名</div> <div class="grid-column">姓名</div><div class="grid-column">测试时间</div><div class="grid-column">部位</div>
                 </li>
                 <li v-for="item in avgItems" v-bind:key="item.avgRecordId" v-bind:data-avgRecordId="item.avgRecordId" class="grid-row">
-                    <div class="grid-column grid-column-first"><input type="checkbox" :value="item.checked" v-model="item.checked"></div>
+                    <div class="grid-column grid-column-first"><input v-bind:data-rid="item.avgRecordId" @change="selectAvgRecord(item)" type="checkbox" :value="item.checked" v-model="item.checked"></div>
                     <div @click="display(item, true)" class="grid-column">{{item.avgRecordName}}</div>
                     <div @click="display(item, true)" class="grid-column">{{item.userId}}</div>
                     <div @click="display(item, true)" class="grid-column">{{item.testDate}}</div>
@@ -113,7 +113,7 @@ export default {
             fromAge: null,
             toAge: null,
             gender: 'ALL',
-            bodyPart: 0,
+            bodyPart: '所有部位',
             fromDate: null,
             toDate: null,
             items: [],
@@ -135,7 +135,7 @@ export default {
             if(this.isAvg){
                 Services.searchAvg(this.__fetchParam())
                     .done((data) => {
-                        console.log(data)
+                        // console.log(data)
                         this.avgItems = data;
                         this.avgItems.forEach(i => i.checked = false);
                         // this.$router.push('/user/' + this.userId);
@@ -148,6 +148,24 @@ export default {
                         this.items.forEach(i => i.checked = false);
                         // this.$router.push('/user/' + this.userId);
                     }).fail(() => console.log(arguments));
+            }
+        },
+        selectRecord(item){
+            this.items.filter(i => i != item && i.checked == true).forEach(i => i.checked = false);
+            let checks = $('.records-list.r input:checked');
+            for(let i = 0; i < checks.length; i++){
+                if(checks[i].dataset['rid'] !== item.recordId){
+                    checks[i].checked = false;
+                }
+            }
+        },
+        selectAvgRecord(item){
+            this.avgItems.filter(i => i != item && i.checked == true).forEach(i => i.checked = false);
+            let checks = $('.records-list.avg input:checked');
+            for(let i = 0; i < checks.length; i++){
+                if(checks[i].dataset['rid'] !== item.avgRecordId){
+                    checks[i].checked = false;
+                }
             }
         },
         display(record, isAvg){
