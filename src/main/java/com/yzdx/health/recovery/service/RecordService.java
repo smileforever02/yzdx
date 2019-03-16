@@ -65,10 +65,10 @@ public class RecordService {
         if (StringUtils.isNotBlank(userId)) {
             sql.append(" and userId='").append(userId).append("'");
         }
-        if (StringUtils.isNotBlank(bodyPart) && !"ALL".equalsIgnoreCase(bodyPart)) {
+        if (StringUtils.isNotBlank(bodyPart) && !"所有部位".equalsIgnoreCase(bodyPart)) {
             sql.append(" and bodyPart='").append(bodyPart).append("'");
         }
-        if (StringUtils.isNotBlank(gender) && !"ALL".equalsIgnoreCase(bodyPart)) {
+        if (StringUtils.isNotBlank(gender) && !"ALL".equalsIgnoreCase(gender)) {
             sql.append(" and gender='").append(gender).append("'");
         }
         if (fromAge > 0) {
@@ -139,7 +139,7 @@ public class RecordService {
                 if (!StringUtils.isEmpty(userId)) {
                     predicates.add(criteriaBuilder.equal(root.get("userId"), userId));
                 }
-                if (!StringUtils.isEmpty(bodyPart) && !"ALL".equalsIgnoreCase(bodyPart)) {
+                if (!StringUtils.isEmpty(bodyPart) && !"所有部位".equalsIgnoreCase(bodyPart)) {
                     predicates.add(criteriaBuilder.like(root.get("bodyPart"), "%" + bodyPart + "%"));
                 }
                 if (!StringUtils.isEmpty(gender) && !"ALL".equalsIgnoreCase(gender)) {

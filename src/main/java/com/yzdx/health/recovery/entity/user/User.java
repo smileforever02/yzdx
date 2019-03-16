@@ -1,6 +1,8 @@
 package com.yzdx.health.recovery.entity.user;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,6 +19,7 @@ public class User {
     private Date birthday;
     private String phoneNumber;
     private String email;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createdDate;
 
     public String getUserId() {

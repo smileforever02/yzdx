@@ -1,5 +1,6 @@
 package com.yzdx.health.recovery.entity.record.avg;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -24,8 +25,10 @@ public class AvgRecord {
 
     private String gender;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date fromDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date toDate;
 
     private long recordCount;
@@ -36,6 +39,7 @@ public class AvgRecord {
     private String avgRecordName;
     private String description;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createdDate;
 
     public Long getAvgRecordId() {

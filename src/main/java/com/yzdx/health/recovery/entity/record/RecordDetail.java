@@ -1,6 +1,7 @@
 package com.yzdx.health.recovery.entity.record;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class RecordDetail {
 
     private double power;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createdDate;
 
     public Long getDetailId() {

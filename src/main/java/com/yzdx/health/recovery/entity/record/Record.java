@@ -1,5 +1,6 @@
 package com.yzdx.health.recovery.entity.record;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Record {
 
     private String userId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date testDate;
 
     private double age;
@@ -37,6 +39,7 @@ public class Record {
     @OneToMany(mappedBy = "record", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<RecordDetail> recordDetails;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createdDate;
 
     public Long getRecordId() {
