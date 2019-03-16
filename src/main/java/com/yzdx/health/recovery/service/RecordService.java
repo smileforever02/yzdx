@@ -7,6 +7,7 @@ import com.yzdx.health.recovery.entity.record.avg.AvgRecord;
 import com.yzdx.health.recovery.entity.record.avg.AvgRecordDetail;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -133,6 +134,7 @@ public class RecordService {
     }
 
     public List<Record> findAll(String userId, String bodyPart, String gender, String fromAge, String toAge, String fromDate, String toDate) {
+        Sort sort = new Sort(Sort.Direction.DESC, "bodyPart", "testDate");
         return repository.findAll(new Specification<Record>() {
             @Override
             public Predicate toPredicate(Root<Record> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -170,6 +172,6 @@ public class RecordService {
 
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
             }
-        });
+        }, sort);
     }
 }
