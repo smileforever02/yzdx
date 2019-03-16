@@ -54,7 +54,7 @@ public class RecordService {
     }
 
     public List<Record> findAllByUserId(String userId) {
-        return repository.findAllByUserId(userId);
+        return repository.findAllByUserIdOrderByTestDateDesc(userId);
     }
 
     // fromDate and toDate format should be YYYY-MM-DD

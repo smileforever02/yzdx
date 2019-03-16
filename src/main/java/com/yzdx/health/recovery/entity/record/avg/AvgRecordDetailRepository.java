@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface AvgRecordDetailRepository extends JpaRepository<AvgRecordDetail, Long> {
-    List<AvgRecordDetail> getAllByAvgRecordAvgRecordId(Long avgRecordId);
+    List<AvgRecordDetail> getAllByAvgRecordAvgRecordIdOrderByTime(Long avgRecordId);
 }

@@ -13,12 +13,7 @@ public class RecordDetailService {
     @Autowired
     RecordDetailRepository repository;
 
-    public List<RecordDetail> createRecordDetail(List<RecordDetail> details) {
-        return repository.saveAll(details);
-    }
-
     public List<RecordDetail> getRecordDetail(Long recordId) {
-        return repository.getAllByRecordRecordId(recordId);
+        return repository.getAllByRecordRecordIdOrderByTime(recordId);
     }
-
 }

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface RecordRepository extends JpaRepository<Record, Long>, JpaSpecificationExecutor<Record> {
-    List<Record> findAllByUserId(String userId);
+    List<Record> findAllByUserIdOrderByTestDateDesc(String userId);
     Optional<Record> findAllByFileName(String fileName);
 }

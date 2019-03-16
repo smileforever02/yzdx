@@ -14,6 +14,6 @@ public class AvgRecordDetailService {
     AvgRecordDetailRepository repository;
 
     public List<AvgRecordDetail> getAllByAvgRecordAvgRecordId(Long avgRecordId) {
-        return repository.getAllByAvgRecordAvgRecordId(avgRecordId);
+        return repository.getAllByAvgRecordAvgRecordIdOrderByTime(avgRecordId);
     }
 }
