@@ -96,7 +96,7 @@ export default {
         initChartData(callback){
             if(this.chartQuery.isCompare){
                 $.when(Services.queryRecordDetail({recordId: this.chartQuery.record.recordId}),
-                    Services.queryAvgRecordDetail({avgRecordId: this.chartQuery.record.avgRecordId})).done((nor, avg) => {
+                    Services.queryAvgRecordDetail({avgRecordId: this.chartQuery.avgRecord.avgRecordId})).done((nor, avg) => {
                          this.__normalizeRecordDetail(nor, avg);
                          this.__initChart(this.chartQuery.record.userId + '  ' + this.chartQuery.avgRecord.avgRecordName + '  ' + this.chartQuery.record.testDate + '  ' + this.chartQuery.record.bodyPart + '  比较图');
                          callback();
