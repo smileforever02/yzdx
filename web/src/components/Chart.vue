@@ -193,8 +193,8 @@ export default {
             if(this.chartQuery.isCompare){
                 lineChartData.datasets.push({
                     label: '平均电容',
-                    borderColor: 'yellow',
-                    backgroundColor: 'yellow',
+                    borderColor: '#337ab7',
+                    backgroundColor: '#337ab7',
                     fill: false,
                     data: [],
                     yAxisID: 'y-axis-1',
