@@ -17,9 +17,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ExcelService {
@@ -144,12 +144,12 @@ public class ExcelService {
             record.setFileDownloadUri(fileDownloadUri);
             record.setCreatedDate(new Date());
 
-            Set<RecordDetail> details = new HashSet<>();
+            List<RecordDetail> details = new LinkedList<>();
             for (; i <= lastRowNum; i++) {
                 Row row = sheet.getRow(i);
                 if (row != null && row.getCell(0) != null
-                && row.getCell(1) != null && row.getCell(2) != null
-                && row.getCell(3) != null && row.getCell(4) != null) {
+                        && row.getCell(1) != null && row.getCell(2) != null
+                        && row.getCell(3) != null && row.getCell(4) != null) {
                     RecordDetail detail = new RecordDetail();
                     detail.setTime(row.getCell(0).getNumericCellValue());
                     detail.setCap(row.getCell(1).getNumericCellValue());

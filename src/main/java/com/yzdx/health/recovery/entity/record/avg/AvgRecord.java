@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-@JsonIgnoreProperties(value={"avgRecordDetails"})
+@JsonIgnoreProperties(value = {"avgRecordDetails"})
 @Entity
 public class AvgRecord {
     @Id
@@ -34,7 +34,7 @@ public class AvgRecord {
     private long recordCount;
 
     @OneToMany(mappedBy = "avgRecord", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<AvgRecordDetail> avgRecordDetails;
+    private List<AvgRecordDetail> avgRecordDetails;
 
     private String avgRecordName;
     private String description;
@@ -114,11 +114,11 @@ public class AvgRecord {
         this.recordCount = recordCount;
     }
 
-    public Set<AvgRecordDetail> getAvgRecordDetails() {
+    public List<AvgRecordDetail> getAvgRecordDetails() {
         return avgRecordDetails;
     }
 
-    public void setAvgRecordDetails(Set<AvgRecordDetail> avgRecordDetails) {
+    public void setAvgRecordDetails(List<AvgRecordDetail> avgRecordDetails) {
         this.avgRecordDetails = avgRecordDetails;
     }
 

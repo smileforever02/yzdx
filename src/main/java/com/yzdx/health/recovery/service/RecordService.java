@@ -17,10 +17,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecordService {
@@ -105,7 +107,7 @@ public class RecordService {
         record.setCreatedDate(new Date());
 
         long maxRecordCount = 0;
-        Set<AvgRecordDetail> detailSet = new HashSet<>();
+        List<AvgRecordDetail> details = new LinkedList<>();
         for (Object o : list) {
             Object[] arr = (Object[]) o;
             AvgRecordDetail detail = new AvgRecordDetail();
@@ -119,10 +121,10 @@ public class RecordService {
             detail.setRecordCount(count);
             detail.setCreatedDate(new Date());
             detail.setAvgRecord(record);
-            detailSet.add(detail);
+            details.add(detail);
         }
         record.setRecordCount(maxRecordCount);
-        record.setAvgRecordDetails(detailSet);
+        record.setAvgRecordDetails(details);
         return avgRecordService.saveAvgRecord(record);
     }
 

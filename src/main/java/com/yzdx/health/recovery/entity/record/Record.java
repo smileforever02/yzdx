@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
-@JsonIgnoreProperties(value={"recordDetails"})
+@JsonIgnoreProperties(value = {"recordDetails"})
 @Entity
 @Table(name = "record")
 public class Record {
@@ -37,7 +37,7 @@ public class Record {
     private long size;
 
     @OneToMany(mappedBy = "record", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<RecordDetail> recordDetails;
+    private List<RecordDetail> recordDetails;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createdDate;
@@ -122,11 +122,11 @@ public class Record {
         this.size = size;
     }
 
-    public Set<RecordDetail> getRecordDetails() {
+    public List<RecordDetail> getRecordDetails() {
         return recordDetails;
     }
 
-    public void setRecordDetails(Set<RecordDetail> recordDetails) {
+    public void setRecordDetails(List<RecordDetail> recordDetails) {
         this.recordDetails = recordDetails;
     }
 
