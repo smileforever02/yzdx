@@ -48,10 +48,10 @@ public class AvgRecordService {
                 if (StringUtils.isNotBlank(userId)) {
                     predicates.add(criteriaBuilder.equal(root.get("userId"), userId));
                 }
-                if (StringUtils.isNotBlank(bodyPart)) {
+                if (StringUtils.isNotBlank(bodyPart) && !"所有部位".equalsIgnoreCase(bodyPart)) {
                     predicates.add(criteriaBuilder.like(root.get("bodyPart"), "%" + bodyPart + "%"));
                 }
-                if (StringUtils.isNotBlank(gender)) {
+                if (StringUtils.isNotBlank(gender) && !"ALL".equalsIgnoreCase(gender)) {
                     predicates.add(criteriaBuilder.equal(root.get("gender"), gender));
                 }
                 if (StringUtils.isNotBlank(fromAge)) {
