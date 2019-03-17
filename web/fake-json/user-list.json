@@ -1,72 +1,65 @@
 [{
-	"recordId": "10011",
-	"userId": "U-Tom",
-	"fileName": "文件1",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "10021",
-	"userId": "U-Kobe",
-	"fileName": "文件1",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "10031",
-	"userId": "U-Kerry",
-	"fileName": "文件1",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "10041",
-	"userId": "U-Jams",
-	"fileName": "文件2",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "10051",
-	"userId": "U-Larry",
-	"fileName": "文件2",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"bodyPart": "左胳膊"
- },
- {
-	"recordId": "1001",
-	"userId": "U-Tom",
-	"fileName": "文件2",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "1002",
-	"userId": "U-Kobe",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"fileName": "文件2",
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "1003",
-	"userId": "U-Kerry",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"fileName": "文件2",
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "1004",
-	"userId": "U-Jams",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"fileName": "文件2",
-	"bodyPart": "左胳膊"
- },{
-	"recordId": "1005",
-	"userId": "U-Larry",
-	"testDate": "2019-01-01 12:12:12",
-	"age": 18,
-	"fileName": "文件2",
-	"bodyPart": "左胳膊"
- }]
+	"recordId": 1,
+	"userId": "李四",
+	"testDate": "2018-07-24 19:25:48",
+	"age": 24.0,
+	"gender": "M",
+	"bodyPart": "左食指",
+	"frequency": 45.0,
+	"fileName": "lisi.xlsx",
+	"fileDownloadUri": "http://localhost/downloadFile/lisi-20180724192548.xlsx",
+	"size": 37829,
+	"createdDate": "2019-03-16 22:26:45"
+},
+{
+	"recordId": 2,
+	"userId": "王二",
+	"testDate": "2018-07-24 19:40:20",
+	"age": 24.0,
+	"gender": "F",
+	"bodyPart": "左拇指",
+	"frequency": 40.0,
+	"fileName": "wanger.xlsx",
+	"fileDownloadUri": "http://localhost/downloadFile/wanger-20180724194020.xlsx",
+	"size": 37318,
+	"createdDate": "2019-03-16 22:26:52"
+},
+{
+	"recordId": 8,
+	"userId": "张三",
+	"testDate": "2018-07-24 18:57:33",
+	"age": 25.0,
+	"gender": "M",
+	"bodyPart": "左拇指",
+	"frequency": 45.0,
+	"fileName": "zhangsan.xlsx",
+	"fileDownloadUri": "http://localhost/downloadFile/zhangsan-20180724185733.xlsx",
+	"size": 33318,
+	"createdDate": "2019-03-16 22:30:54"
+},
+{
+	"recordId": 7,
+	"userId": "张三",
+	"testDate": "2018-07-24 18:55:19",
+	"age": 25.0,
+	"gender": "M",
+	"bodyPart": "左拇指",
+	"frequency": 45.0,
+	"fileName": "zhangsan.xlsx",
+	"fileDownloadUri": "http://localhost/downloadFile/zhangsan-20180724185519.xlsx",
+	"size": 41234,
+	"createdDate": "2019-03-16 22:30:43"
+},
+{
+	"recordId": 6,
+	"userId": "张三",
+	"testDate": "2018-07-24 18:51:42",
+	"age": 25.0,
+	"gender": "M",
+	"bodyPart": "左拇指",
+	"frequency": 45.0,
+	"fileName": "zhangsan.xlsx",
+	"fileDownloadUri": "http://localhost/downloadFile/zhangsan-20180724185142.xlsx",
+	"size": 47882,
+	"createdDate": "2019-03-16 22:30:24"
+}]

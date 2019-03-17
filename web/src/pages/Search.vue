@@ -168,7 +168,7 @@ export default {
             this.items.filter(i => i != item && i.checked == true).forEach(i => i.checked = false);
             let checks = $('.records-list.r input:checked');
             for(let i = 0; i < checks.length; i++){
-                if(checks[i].dataset['rid'] !== item.recordId){
+                if(checks[i].dataset['rid'] !== (item.recordId + '')){
                     checks[i].checked = false;
                 }
             }
@@ -177,7 +177,7 @@ export default {
             this.avgItems.filter(i => i != item && i.checked == true).forEach(i => i.checked = false);
             let checks = $('.records-list.avg input:checked');
             for(let i = 0; i < checks.length; i++){
-                if(checks[i].dataset['rid'] !== item.avgRecordId){
+                if(checks[i].dataset['rid'] !== (item.avgRecordId + '')){
                     checks[i].checked = false;
                 }
             }
