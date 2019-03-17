@@ -109,13 +109,6 @@ public class ExcelService {
                             record.setAge(secondCell.getNumericCellValue());
                         } else if ("性别".equalsIgnoreCase(cellValue)) {
                             String gender = secondCell.getStringCellValue();
-                            if ("M".equalsIgnoreCase(gender)
-                                    || "men".equalsIgnoreCase(gender)
-                                    || "男".equalsIgnoreCase(gender)) {
-                                gender = "M";
-                            } else {
-                                gender = "F";
-                            }
                             userToSave.setGender(gender);
                             record.setGender(gender);
                         } else if ("出生日期".equalsIgnoreCase(cellValue) || "生日".equalsIgnoreCase(cellValue)) {
