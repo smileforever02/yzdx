@@ -1,13 +1,16 @@
 package com.yzdx.health.recovery.entity.record;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@JsonIgnoreProperties(value={"record"})
+@Getter
+@Setter
+@JsonIgnoreProperties(value = {"record"})
 @Entity
 @Table(name = "record_detail")
 public class RecordDetail {
@@ -17,7 +20,7 @@ public class RecordDetail {
     private Long detailId;
 
     @ManyToOne
-    @JoinColumn(name = "record_id",referencedColumnName = "record_id", nullable = false)
+    @JoinColumn(name = "record_id", referencedColumnName = "record_id", nullable = false)
     private Record record;
 
     private double time;
@@ -32,68 +35,4 @@ public class RecordDetail {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createdDate;
-
-    public Long getDetailId() {
-        return detailId;
-    }
-
-    public void setDetailId(Long detailId) {
-        this.detailId = detailId;
-    }
-
-    public Record getRecord() {
-        return record;
-    }
-
-    public void setRecord(Record record) {
-        this.record = record;
-    }
-
-    public double getTime() {
-        return time;
-    }
-
-    public void setTime(double time) {
-        this.time = time;
-    }
-
-    public double getInitCap() {
-        return initCap;
-    }
-
-    public void setInitCap(double initCap) {
-        this.initCap = initCap;
-    }
-
-    public double getCap() {
-        return cap;
-    }
-
-    public void setCap(double cap) {
-        this.cap = cap;
-    }
-
-    public double getDeltaCapPerc() {
-        return deltaCapPerc;
-    }
-
-    public void setDeltaCapPerc(double deltaCapPerc) {
-        this.deltaCapPerc = deltaCapPerc;
-    }
-
-    public double getPower() {
-        return power;
-    }
-
-    public void setPower(double power) {
-        this.power = power;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
 }

@@ -37,8 +37,8 @@ public class AvgRecordService {
         }
     }
 
-    public List<AvgRecord> findAll(String userId, String bodyPart, String gender, String fromAge, String toAge,
-                                   String fromDate, String toDate, String avgRecordName) {
+    public List<AvgRecord> getAvgRecords(String userId, String bodyPart, String gender, String fromAge, String toAge,
+                                         String fromDate, String toDate, String avgRecordName) {
         Sort sort = new Sort(Sort.Direction.DESC, "bodyPart", "createdDate");
         return repository.findAll(new Specification<AvgRecord>() {
             @Override

@@ -52,7 +52,7 @@ public class RecordService {
         repository.delete(record);
     }
 
-    public Optional<Record> findById(Long recordId) {
+    public Optional<Record> getRecord(Long recordId) {
         return repository.findById(recordId);
     }
 
@@ -133,7 +133,7 @@ public class RecordService {
         return repository.findAllByFileName(fileName);
     }
 
-    public List<Record> findAll(String userId, String bodyPart, String gender, String fromAge, String toAge, String fromDate, String toDate) {
+    public List<Record> getRecords(String userId, String bodyPart, String gender, String fromAge, String toAge, String fromDate, String toDate) {
         Sort sort = new Sort(Sort.Direction.DESC, "bodyPart", "testDate");
         return repository.findAll(new Specification<Record>() {
             @Override

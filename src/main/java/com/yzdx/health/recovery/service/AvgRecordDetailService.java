@@ -9,11 +9,10 @@ import java.util.List;
 
 @Service
 public class AvgRecordDetailService {
-
     @Autowired
     AvgRecordDetailRepository repository;
 
-    public List<AvgRecordDetail> getAllByAvgRecordAvgRecordId(Long avgRecordId) {
+    public List<AvgRecordDetail> getAvgRecordDetail(Long avgRecordId) {
         return repository.getAllByAvgRecordAvgRecordIdOrderByTime(avgRecordId);
     }
 }
