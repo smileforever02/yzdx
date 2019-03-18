@@ -70,6 +70,11 @@ public class RecordController {
         return deltaRecordService.genDeltaRecordDetail(param.getRecordId(), param.getAvgRecordId(), param.getDeltaRecordName(), param.getDescription());
     }
 
+    @GetMapping("/getDeltaRecords")
+    public List<DeltaRecord> getDeltaRecords(@RequestParam("userId") final String userId) {
+        return deltaRecordService.getDeltaRecords(userId);
+    }
+
     @GetMapping("/getDeltaRecordDetail")
     public List<DeltaRecordDetail> getDeltaRecordDetail(@RequestParam("deltaRecordId") final Long deltaRecordId) {
         return deltaRecordService.getDeltaRecordDetail(deltaRecordId);
