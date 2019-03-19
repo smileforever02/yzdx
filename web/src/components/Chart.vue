@@ -9,6 +9,10 @@
                 <label for="maxDisplayed">最大显示</label>
                 <input class="form-control" id="maxDisplayed" min="10" type="number" v-model.lazy.trim="maxDisplayed">
             </div>
+            <div class="form-group" v-if="isCompare">
+                <label for="diff">显示差值</label>
+                <input class="form-control" id="diff" type="checkbox" @change="showDiffData" v-model.lazy.trim="showDiff">
+            </div>
             <!-- <div class="form-group">
                 <label for="age">年龄</label>
                 <input class="form-control" id="fromAge" placeholder="开始年龄" type="number" max="120" min="0" v-model.lazy.trim="fromAge">
@@ -50,7 +54,13 @@ export default {
             chart: null,
             chartCfg: null,
             chartData: {},
-            tag: -1
+            oriChartData: {},
+            diffChartData: {},
+            oriChartCfgData: {},
+            diffChartCfgData: {},
+            tag: -1,
+            showDiff: false,
+            isCompare: this.chartQuery.isCompare
         }
     },
     mounted(){
@@ -59,6 +69,19 @@ export default {
         this.drawChart();
     },
     methods: {
+        showDiffData(){
+            if(this.chartQuery.isCompare){
+                if(this.showDiff){
+                    this.chartData = this.diffChartData;
+                    this.chartCfg.data = this.diffChartCfgData;
+                    this.draw();
+                } else {
+                    this.chartData = this.oriChartData;
+                    this.chartCfg.data = this.oriChartCfgData;
+                    this.draw();
+                }
+            }
+        },
         setMax(){
             try{
                 this.maxDisplayed = parseInt(this.maxDisplayed);
@@ -132,7 +155,7 @@ export default {
                 data1: this.chartData.data1.slice(this.startIdx, end),
                 data2: this.chartData.data2.slice(this.startIdx, end)
             };
-            if(this.chartQuery.isCompare){
+            if(this.chartQuery.isCompare && !this.showDiff){
                 d.data11 = this.chartData.data11.slice(this.startIdx, end);
                 d.data22 = this.chartData.data22.slice(this.startIdx, end);
             }
@@ -147,7 +170,7 @@ export default {
             d.labels = displayedChartData.labels;
             d.datasets[0].data = displayedChartData.data1;
             d.datasets[1].data = displayedChartData.data2;
-            if(this.chartQuery.isCompare){
+            if(this.chartQuery.isCompare && !this.showDiff){
                 d.datasets[2].data = displayedChartData.data11;
                 d.datasets[3].data = displayedChartData.data22;
             }
@@ -169,13 +192,21 @@ export default {
                 this.chartData.size = size;
                 this.chartData.data11 = _data.map(d => d.deltaCapPerc);
                 this.chartData.data22 = _data.map(d => d.power);
+
+                this.diffChartData = {
+                    size: size,
+                    labels: labels,
+                    data1: data1.map((v, i) => v - this.chartData.data11[i]),
+                    data2: data2.map((v, i) => v - this.chartData.data22[i])
+                };
             }
+            this.oriChartData = this.chartData;
         },
         __initChart(title){
             var lineChartData = {
                 labels: [],
                 datasets: [{
-                    label: '电容',
+                    label: '相对电容',
                     borderColor: 'red',
                     backgroundColor: 'red',
                     fill: false,
@@ -208,6 +239,25 @@ export default {
                     yAxisID: 'y-axis-2',
                 });
             }
+            this.oriChartCfgData = lineChartData;
+            this.diffChartCfgData = {
+                labels: [],
+                datasets: [{
+                    label: '差值电容',
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    fill: false,
+                    data: [],
+                    yAxisID: 'y-axis-1',
+                }, {
+                    label: '差值力',
+                    borderColor: 'blue',
+                    backgroundColor: 'blue',
+                    fill: false,
+                    data: [],
+                    yAxisID: 'y-axis-2'
+                }]
+            };
             this.chartCfg = {
 				data: lineChartData,
 				options: {
