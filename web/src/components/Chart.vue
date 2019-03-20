@@ -269,16 +269,31 @@ export default {
 						text: title // record.userId + '  ' + record.testDate + '  ' + record.bodyPart
 					},
 					scales: {
+					        xAxes: [{
+							display: true,
+							scaleLabel: {
+								display: true,
+								labelString: '时间'
+							}
+						}],
 						yAxes: [{
 							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
 							display: true,
 							position: 'left',
 							id: 'y-axis-1',
+							scaleLabel: {
+								display: true,
+								labelString: '电容'
+							}
 						}, {
 							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
 							display: true,
 							position: 'right',
 							id: 'y-axis-2',
+							scaleLabel: {
+								display: true,
+								labelString: '力'
+							},
 							// grid line settings
 							gridLines: {
 								drawOnChartArea: false // only want the grid lines for one axis to show up
