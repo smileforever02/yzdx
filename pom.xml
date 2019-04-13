@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>health-recovery</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>war</packaging>
 
     <properties>
         <start-class>com.yzdx.health.recovery.HealthRecoveryApplication</start-class>
@@ -84,6 +85,7 @@
     </dependencies>
 
     <build>
+        <finalName>yzdx</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -126,7 +128,7 @@
         </resources>
     </build>
 
-
+<!--
     <profiles>
         <profile>
             <id>default</id>
@@ -175,5 +177,5 @@
             <id>no-assembly</id>
         </profile>
     </profiles>
-
+-->
 </project>
